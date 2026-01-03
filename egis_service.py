@@ -2,16 +2,20 @@
 import time
 import sys
 import threading
+import os
 from gi.repository import GLib
 from pydbus import SystemBus
+from pydbus.generic import signal
 
-# Import your actual driver logic
+# --- MODULES ---
+# Ensure we can import from the current directory
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from egis_driver import EgisDriver
-from matcher import FingerprintMatcher 
+from fingerprint_matcher import FingerprintMatcher 
 
-# The Interface open-fprintd expects backend drivers to speak
-XML_INTERFACE = """
-<node>
+# --- DBUS XML DEFINITION ---
+# We use .strip() to ensure NO whitespace exists before <node>
+XML_INTERFACE = """<node>
   <interface name="io.github.uunicorn.Fprint.Device">
     <method name="Claim">
       <arg direction="in" type="s" name="username"/>
@@ -51,109 +55,112 @@ XML_INTERFACE = """
 </node>
 """
 
-class EgisDBusService:
-    dbus = XML_INTERFACE
+class EgisService:
+
+    # Force removal of newlines at start/end
+    dbus = XML_INTERFACE.strip()
+
+    # --- ADD THESE LINES ---
+    VerifyStatus = signal()
+    VerifyFingerSelected = signal()
+    EnrollStatus = signal()
 
     def __init__(self):
-        print("[Service] Initializing Egis Hardware...")
-        self.driver = EgisDriver() 
-        self.matcher = FingerprintMatcher(enroll_dir="/var/lib/open-fprintd/egis")
+        print("[Service] Initializing Hardware...")
+        # Verify XML is clean
+        if not self.dbus.startswith("<node>"):
+            print(f"[CRITICAL] XML format error! Starts with: {repr(self.dbus[:10])}")
+            sys.exit(1)
+
+        try:
+            self.driver = EgisDriver()
+        except Exception as e:
+            print(f"[Error] Failed to initialize driver: {e}")
+            sys.exit(1)
+            
+        storage_path = "/var/lib/open-fprintd/egis"
+        self.matcher = FingerprintMatcher(enroll_dir=storage_path)
         
         self.scan_thread = None
         self.cancel_scan = False
-
-    # --- DBus Methods ---
+        self.claimed_user = None
 
     def Claim(self, username):
-        # We don't really need to do anything for Claim with this hardware
         print(f"[Service] Claimed by {username}")
-        pass
+        self.claimed_user = username
 
     def Release(self):
         print("[Service] Released")
         self._stop_scan_thread()
+        self.claimed_user = None
 
     def ListEnrolledFingers(self, username):
-        # In a real implementation, ask matcher which files exist
-        # For now, returning empty list or letting matcher handle it is fine
-        # if the matcher had a list_fingers() method, we'd use it here.
-        # But for 'open-fprintd', returning [] usually forces it to just assume logic.
-        # Ideally: return self.matcher.get_enrolled_list(username)
-        return []
+        print(f"[Service] Listing fingers for {username}")
+        fingers = self.matcher.get_enrolled_fingers(username)
+        print(f" -> Found: {fingers}")
+        return fingers
 
     def DeleteEnrolledFingers(self, username):
         print(f"[Service] Deleting fingers for {username}")
-        # self.matcher.delete_user(username)
-        pass
+        self.matcher.delete_user_fingers(username)
 
     def VerifyStart(self, username, finger_name):
         print(f"[Service] Verify requested for {username}")
-        self._start_thread(self._verify_loop, (username,))
+        self._start_thread(self._verify_loop, (username, finger_name))
 
     def EnrollStart(self, username, finger_name):
         print(f"[Service] Enroll requested for {username} (finger: {finger_name})")
         self._start_thread(self._enroll_loop, (username, finger_name))
 
     def Cancel(self):
-        """
-        Called by open-fprintd when the user cancels the operation
-        or the GDM login screen times out.
-        """
         print("[Service] Cancel requested")
         self._stop_scan_thread()
 
-    # --- Internal Logic ---
-
-    def _verify_loop(self, username):
+    def _verify_loop(self, username, finger_name):
         print("[Verify] Starting loop...")
-        # Verify loop runs until match, cancel, or timeout (30s implied by GDM)
         while not self.cancel_scan:
             frame = self.driver.capture_frame(timeout_sec=0.5)
             if frame:
-                match, score = self.matcher.verify_finger(frame)
-                if match and score > 15:
-                    print(f"MATCH! Score: {score}")
+                match_name, score = self.matcher.verify_finger(frame)
+                expected_prefix = f"{username}_"
+                
+                if match_name and match_name.startswith(expected_prefix) and score > 15:
+                    print(f"MATCH! Finger: {match_name}, Score: {score}")
                     self.VerifyStatus("verify-match", True)
                     return
+                elif match_name:
+                     print(f"Mismatch: Saw {match_name} but wanted {username}")
+                     self.VerifyStatus("verify-no-match", False)
                 else:
-                    print("No match found.")
                     self.VerifyStatus("verify-no-match", False)
-            # Sleep small amount if driver didn't block
             time.sleep(0.01)
-            
-        print("[Verify] Stopped.")
 
     def _enroll_loop(self, username, finger_name):
-        # GNOME expects 5 stages by default (we can configure this in open-fprintd too)
         STAGES = 5
         completed = 0
         samples = []
 
-        print(f"[Enroll] Starting {STAGES} stage enrollment...")
-
+        print(f"[Enroll] Starting enrollment for {finger_name}...")
         while completed < STAGES and not self.cancel_scan:
             print(f"[Enroll] Waiting for finger (Stage {completed+1})...")
-            
-            # 1. Capture
-            frame = self.driver.capture_frame(timeout_sec=1.0)
+            frame = self.driver.capture_frame(timeout_sec=2.0)
             if frame:
                 samples.append(frame)
                 completed += 1
                 print(f"[Enroll] Stage {completed} captured.")
                 self.EnrollStatus("enroll-stage-passed", False)
-                
-                # 2. Wait for lift (Debounce)
                 time.sleep(1.0) 
             
         if not self.cancel_scan and completed == STAGES:
             print("[Enroll] All stages complete. Saving...")
-            self.matcher.enroll_finger(f"{username}_{finger_name}", samples)
+            full_name = f"{username}_{finger_name}"
+            self.matcher.enroll_finger(full_name, samples)
             self.EnrollStatus("enroll-completed", True)
+        elif self.cancel_scan:
+             print("[Enroll] Cancelled.")
         else:
-            print("[Enroll] Cancelled or Failed.")
             self.EnrollStatus("enroll-failed", True)
 
-    # --- Thread Helpers ---
     def _start_thread(self, target, args):
         self._stop_scan_thread()
         self.cancel_scan = False
@@ -164,27 +171,37 @@ class EgisDBusService:
     def _stop_scan_thread(self):
         self.cancel_scan = True
         if self.scan_thread and self.scan_thread.is_alive():
-            self.scan_thread.join(timeout=1.0)
+            self.scan_thread.join(timeout=2.0)
 
-# --- BOOTSTRAP ---
 if __name__ == "__main__":
-    bus = SystemBus()
-    
-    # 1. Publish our object
-    MY_DBUS_PATH = "/org/reactivated/Fprint/Device/Egis575"
-    service = EgisDBusService()
-    bus.publish("org.reactivated.Fprint.Driver.Egis575", [(MY_DBUS_PATH, service)])
-    
-    print("[Main] DBus Service Published. Registering with Open-Fprintd...")
+    if not os.path.exists("/var/lib/open-fprintd/egis"):
+        try:
+            os.makedirs("/var/lib/open-fprintd/egis")
+        except PermissionError:
+            print("Error: Run as root to create /var/lib/open-fprintd/egis")
+            sys.exit(1)
 
-    # 2. Tell open-fprintd we exist
+    bus = SystemBus()
+    MY_DBUS_PATH = "/org/reactivated/Fprint/Device/Egis575"
+    
     try:
-        manager = bus.get("net.reactivated.Fprint.Manager")
+        service = EgisService()
+        bus.publish("org.reactivated.Fprint.Driver.Egis575", (MY_DBUS_PATH, service))
+        print("[Main] DBus Service Published locally.")
+    except Exception as e:
+        print(f"Failed to publish DBus service: {e}")
+        sys.exit(1)
+    
+    print("[Main] Registering with Open-Fprintd Manager...")
+    try:
+        # Use the correct Bus Name. 
+        # We also explicitly specify the Object Path where the Manager lives.
+        manager = bus.get("net.reactivated.Fprint", "/net/reactivated/Fprint/Manager")
         manager.RegisterDevice(MY_DBUS_PATH)
-        print("[Main] SUCCESS: Registered with Manager!")
+        print("[Main] Plugin Registered! Ready for GNOME.")
     except Exception as e:
         print(f"[Error] Could not register with Manager: {e}")
-        print("Ensure 'open-fprintd' service is running and you have Polkit permissions!")
+        print("Ensure 'open-fprintd' service is running!")
         sys.exit(1)
 
     loop = GLib.MainLoop()

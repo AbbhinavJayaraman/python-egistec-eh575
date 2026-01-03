@@ -11,6 +11,5 @@ open_fprintd.egg-info/top_level.txt
 openfprintd/__init__.py
 openfprintd/device.py
 openfprintd/manager.py
-openfprintd/polkit.py
 scripts/resume.py
 scripts/suspend.py
