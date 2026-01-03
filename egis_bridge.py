@@ -3,18 +3,18 @@ import dbus.service
 import dbus.mainloop.glib
 from gi.repository import GLib
 import egis_driver
+import fingerprint_matcher  # <--- Now importing your matcher
 import time
 import threading
-import pickle
-import os
-import numpy as np
 
 # --- Configuration ---
 DEVICE_IFACE = 'io.github.uunicorn.Fprint.Device'
 MANAGER_IFACE = 'net.reactivated.Fprint.Manager'
 MANAGER_OBJ = '/net/reactivated/Fprint/Manager'
 MANAGER_BUS = 'net.reactivated.Fprint'
-STORAGE_FILE = "fingerprints.pkl"
+
+# We store prints locally in the driver folder to avoid permission headaches
+ENROLL_DIR = "./enrolled_prints"
 
 class EgisBridge(dbus.service.Object):
     def __init__(self, bus):
@@ -24,25 +24,14 @@ class EgisBridge(dbus.service.Object):
         
         print("[BRIDGE] Initializing Driver...")
         self.driver = egis_driver.EgisDriver()
-        self.scanning = False
-        self.enroll_scans = []  # Temporary storage for current enrollment
         
-        self.prints = self._load_prints()
+        print(f"[BRIDGE] Initializing Matcher (Storage: {ENROLL_DIR})...")
+        self.matcher = fingerprint_matcher.FingerprintMatcher(enroll_dir=ENROLL_DIR)
+        
+        self.scanning = False
+        self.enroll_scans = []  
+        
         self._register_with_manager()
-
-    def _load_prints(self):
-        if os.path.exists(STORAGE_FILE):
-            try:
-                with open(STORAGE_FILE, 'rb') as f:
-                    return pickle.load(f)
-            except:
-                return {}
-        return {}
-
-    def _save_prints(self):
-        with open(STORAGE_FILE, 'wb') as f:
-            pickle.dump(self.prints, f)
-        print("[BRIDGE] Database saved.")
 
     def _register_with_manager(self):
         try:
@@ -59,7 +48,9 @@ class EgisBridge(dbus.service.Object):
     def VerifyStart(self, username, finger_name):
         print(f"[BRIDGE] Verify Requested for user: {username}")
         self.scanning = True
-        threading.Thread(target=self._scan_loop, args=("verify", username)).start()
+        # If finger_name is empty/any, default to right-index
+        target_finger = finger_name if finger_name else "right-index-finger"
+        threading.Thread(target=self._scan_loop, args=("verify", username, target_finger)).start()
 
     @dbus.service.method(DEVICE_IFACE, in_signature='', out_signature='')
     def VerifyStop(self):
@@ -69,15 +60,17 @@ class EgisBridge(dbus.service.Object):
     @dbus.service.method(DEVICE_IFACE, in_signature='ss', out_signature='')
     def EnrollStart(self, username, finger_name):
         print(f"[BRIDGE] Enroll Requested for user: {username}")
-        self.enroll_scans = [] # Reset counter
+        self.enroll_scans = [] 
         self.scanning = True
-        threading.Thread(target=self._scan_loop, args=("enroll", username)).start()
+        # If finger_name is empty, default to right-index
+        target_finger = finger_name if finger_name else "right-index-finger"
+        threading.Thread(target=self._scan_loop, args=("enroll", username, target_finger)).start()
 
     @dbus.service.method(DEVICE_IFACE, in_signature='', out_signature='')
     def EnrollStop(self):
         print("[BRIDGE] Enroll Stopped")
         self.scanning = False
-
+        
     @dbus.service.method(DEVICE_IFACE, in_signature='', out_signature='')
     def Cancel(self):
         print("[BRIDGE] Cancel Requested")
@@ -85,22 +78,21 @@ class EgisBridge(dbus.service.Object):
 
     @dbus.service.method(DEVICE_IFACE, in_signature='s', out_signature='as')
     def ListEnrolledFingers(self, username):
-        if username in self.prints:
-            print(f"[BRIDGE] Listing fingers for {username}: {list(self.prints[username].keys())}")
-            return list(self.prints[username].keys())
-        return []
+        fingers = self.matcher.get_enrolled_fingers(username)
+        print(f"[BRIDGE] Listing fingers for {username}: {fingers}")
+        return fingers
 
     @dbus.service.method(DEVICE_IFACE, in_signature='s', out_signature='')
     def DeleteEnrolledFingers(self, username):
         print(f"[BRIDGE] Deleting prints for {username}")
-        if username in self.prints:
-            del self.prints[username]
-            self._save_prints()
+        self.matcher.delete_user_fingers(username)
 
     # --- Logic Core ---
     
     def _wait_for_finger_release(self):
         """Blocks until the sensor is clear to prevent double-scanning."""
+        # Simple debounce
+        time.sleep(0.5) 
         print("[BRIDGE] Waiting for finger release...")
         while self.scanning:
             if self.driver.check_sensor_clear():
@@ -108,74 +100,68 @@ class EgisBridge(dbus.service.Object):
                 return
             time.sleep(0.1)
 
-    def _scan_loop(self, mode, username):
-        print(f"[BRIDGE] Starting {mode} loop...")
+    def _scan_loop(self, mode, username, finger_name):
+        print(f"[BRIDGE] Starting {mode} loop for {username} ({finger_name})...")
         
         while self.scanning:
-            # 1. Wait for finger touch
             if not self.driver.check_sensor_clear():
                 print("[BRIDGE] Finger detected! Capturing...")
                 
-                # 2. Capture Frame
                 img, contrast = self.driver.get_live_frame()
-                if img is None: continue # Bad read
+                if img is None: continue 
 
-                print(f"[BRIDGE] Captured frame. Contrast: {contrast}")
+                print(f"[BRIDGE] Captured frame. Contrast: {contrast:.2f}")
 
                 if mode == "enroll":
-                    self._handle_enroll(img, username)
+                    self._handle_enroll(img, username, finger_name)
                 elif mode == "verify":
                     self._handle_verify(img, username)
                 
-                # 3. CRITICAL: Wait for user to lift finger before next loop
                 self._wait_for_finger_release()
             
             time.sleep(0.05)
 
-    def _handle_enroll(self, img, username):
-        # Add to temporary list
+    def _handle_enroll(self, img, username, finger_name):
         self.enroll_scans.append(img)
         count = len(self.enroll_scans)
         print(f"[BRIDGE] Enroll Progress: {count}/5")
 
         if count < 5:
-            # Tell GNOME "Good scan, lift finger and do it again"
             self.EnrollStatus("enroll-stage-passed", False)
         else:
-            # We are done! Save everything.
-            if username not in self.prints:
-                self.prints[username] = {}
+            # Construct the unique ID for the matcher (e.g. jayabbhi_right-index-finger)
+            unique_name = f"{username}_{finger_name}"
             
-            # Save the list of 5 images as the "fingerprint"
-            self.prints[username]["right-index-finger"] = self.enroll_scans
-            self._save_prints()
+            print(f"[BRIDGE] Processing enrollment for {unique_name}...")
+            success = self.matcher.enroll_finger(unique_name, self.enroll_scans)
             
-            # Tell GNOME "All done"
-            self.EnrollStatus("enroll-completed", True)
+            if success:
+                print("[BRIDGE] Enrollment Successful!")
+                self.EnrollStatus("enroll-completed", True)
+            else:
+                print("[BRIDGE] Enrollment Failed (Low quality?)")
+                self.EnrollStatus("enroll-failed", True)
+                
             self.scanning = False
 
     def _handle_verify(self, img, username):
-        if username not in self.prints or "right-index-finger" not in self.prints[username]:
-            print("[BRIDGE] No prints found for user!")
-            self.VerifyStatus("verify-no-match", False)
-            return
-
-        saved_scans = self.prints[username]["right-index-finger"]
+        # 1. Ask matcher to find the best match in the database
+        match_name, score = self.matcher.verify_finger(img)
         
-        # --- SIMPLE MATCHING LOGIC ---
-        # Since we don't have the advanced matcher yet, we will do a 
-        # simplistic check: Is the contrast similar? (Placeholder!)
-        # REAL MATCHING should go here later.
-        
-        # For now, we assume if you pressed it, it's you (for testing flow)
-        is_match = True 
-        
-        if is_match:
-            print("[BRIDGE] MATCH FOUND!")
-            self.VerifyStatus("verify-match", True)
-            self.scanning = False
+        if match_name:
+            print(f"[BRIDGE] Best Match: {match_name} (Score: {score})")
+            
+            # 2. Check if the matched finger belongs to the requested user
+            # Matcher returns "username_fingername"
+            if match_name.startswith(username + "_"):
+                print("[BRIDGE] AUTHENTICATED!")
+                self.VerifyStatus("verify-match", True)
+                self.scanning = False
+            else:
+                print(f"[BRIDGE] Match found, but belongs to wrong user ({match_name})")
+                self.VerifyStatus("verify-no-match", False)
         else:
-            print("[BRIDGE] No match.")
+            print("[BRIDGE] No match found.")
             self.VerifyStatus("verify-no-match", False)
 
     # --- Signals ---
