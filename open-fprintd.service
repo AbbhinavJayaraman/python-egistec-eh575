@@ -1,0 +1,27 @@
+[Unit]
+Description=Open Fprintd Manager
+# Start after DBus is ready
+After=dbus.service
+Wants=dbus.service
+
+[Service]
+Type=simple
+# We run as root because we need hardware access
+User=root
+Group=root
+
+# Point this to your current folder
+WorkingDirectory=/opt/egis-driver
+
+# We set PYTHONPATH so it finds the local files just like when we ran it manually
+Environment="PYTHONPATH=/opt/egis-driver"
+
+# The command to run the manager
+ExecStart=/usr/bin/python3 -u ./open-fprintd
+
+# Restart if it crashes
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

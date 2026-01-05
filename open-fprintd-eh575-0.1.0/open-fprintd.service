@@ -1,0 +1,16 @@
+[Unit]
+Description=Open Fprintd Manager
+After=dbus.service
+Wants=dbus.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+# Point to the executable in /usr/bin
+ExecStart=/usr/bin/open-fprintd
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

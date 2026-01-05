@@ -1,0 +1,22 @@
+[Unit]
+Description=Egis Fingerprint Bridge
+# This is critical: wait for the manager to start first
+After=open-fprintd.service
+Requires=open-fprintd.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/egis-driver
+Environment="PYTHONPATH=/opt/egis-driver"
+
+# Run your bridge script
+ExecStart=/usr/bin/python3 -u ./egis_bridge.py
+
+# Aggressive restart policy because USB devices can be flaky
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
