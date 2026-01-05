@@ -1,0 +1,1150 @@
+Warning: Permanently added '3.237.233.73' (ED25519) to the list of known hosts.
+
+You can reproduce this build on your computer by running:
+
+  sudo dnf install copr-rpmbuild
+  /usr/bin/copr-rpmbuild --verbose --drop-resultdir --task-url https://copr.fedorainfracloud.org/backend/get-build-task/9975847-fedora-42-x86_64 --chroot fedora-42-x86_64
+
+
+Version: 1.6
+PID: 8694
+Logging PID: 8696
+Task:
+{'allow_user_ssh': False,
+ 'appstream': False,
+ 'background': False,
+ 'build_id': 9975847,
+ 'buildroot_pkgs': [],
+ 'chroot': 'fedora-42-x86_64',
+ 'enable_net': False,
+ 'fedora_review': False,
+ 'git_hash': '8db4fe211beadaac21c815045d7a35b5c5cd253d',
+ 'git_repo': 'https://copr-dist-git.fedorainfracloud.org/git/jayabbhi/open-fprintd-eh575/open-fprintd-eh575',
+ 'isolation': 'default',
+ 'memory_reqs': 2048,
+ 'package_name': 'open-fprintd-eh575',
+ 'package_version': '0.2.0-1',
+ 'project_dirname': 'open-fprintd-eh575',
+ 'project_name': 'open-fprintd-eh575',
+ 'project_owner': 'jayabbhi',
+ 'repo_priority': None,
+ 'repos': [{'baseurl': 'https://download.copr.fedorainfracloud.org/results/jayabbhi/open-fprintd-eh575/fedora-42-x86_64/',
+            'id': 'copr_base',
+            'name': 'Copr repository',
+            'priority': None}],
+ 'sandbox': 'jayabbhi/open-fprintd-eh575--jayabbhi',
+ 'source_json': {},
+ 'source_type': None,
+ 'ssh_public_keys': None,
+ 'storage': 0,
+ 'submitter': 'jayabbhi',
+ 'tags': [],
+ 'task_id': '9975847-fedora-42-x86_64',
+ 'timeout': 18000,
+ 'uses_devel_repo': False,
+ 'with_opts': [],
+ 'without_opts': []}
+
+Running: git clone https://copr-dist-git.fedorainfracloud.org/git/jayabbhi/open-fprintd-eh575/open-fprintd-eh575 /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575 --depth 500 --no-single-branch --recursive
+
+cmd: ['git', 'clone', 'https://copr-dist-git.fedorainfracloud.org/git/jayabbhi/open-fprintd-eh575/open-fprintd-eh575', '/var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575', '--depth', '500', '--no-single-branch', '--recursive']
+cwd: .
+rc: 0
+stdout: 
+stderr: Cloning into '/var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575'...
+
+Running: git checkout 8db4fe211beadaac21c815045d7a35b5c5cd253d --
+
+cmd: ['git', 'checkout', '8db4fe211beadaac21c815045d7a35b5c5cd253d', '--']
+cwd: /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575
+rc: 0
+stdout: 
+stderr: Note: switching to '8db4fe211beadaac21c815045d7a35b5c5cd253d'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 8db4fe2 automatic import of open-fprintd-eh575
+
+Running: dist-git-client sources
+
+cmd: ['dist-git-client', 'sources']
+cwd: /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575
+rc: 0
+stdout: 
+stderr: INFO: Reading stdout from command: git rev-parse --abbrev-ref HEAD
+INFO: Reading stdout from command: git rev-parse HEAD
+INFO: Reading sources specification file: sources
+INFO: Downloading open-fprintd-eh575-0.2.0.tar.gz
+INFO: Reading stdout from command: curl --help all
+INFO: Calling: curl -H Pragma: -o open-fprintd-eh575-0.2.0.tar.gz --location --connect-timeout 60 --retry 3 --retry-delay 10 --remote-time --show-error --fail --retry-all-errors https://copr-dist-git.fedorainfracloud.org/repo/pkgs/jayabbhi/open-fprintd-eh575/open-fprintd-eh575/open-fprintd-eh575-0.2.0.tar.gz/md5/ccfad2bf5c48b6446c4f0db79875c100/open-fprintd-eh575-0.2.0.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  9640  100  9640    0     0   966k      0 --:--:-- --:--:-- --:--:-- 1046k
+INFO: Reading stdout from command: md5sum open-fprintd-eh575-0.2.0.tar.gz
+
+tail: /var/lib/copr-rpmbuild/main.log: file truncated
+Running (timeout=18000): unbuffer mock --spec /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575/open-fprintd-eh575.spec --sources /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575 --resultdir /var/lib/copr-rpmbuild/results --uniqueext 1767623060.984856 -r /var/lib/copr-rpmbuild/results/configs/child.cfg
+INFO: mock.py version 6.6 starting (python version = 3.13.7, NVR = mock-6.6-1.fc42), args: /usr/libexec/mock/mock --spec /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575/open-fprintd-eh575.spec --sources /var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575 --resultdir /var/lib/copr-rpmbuild/results --uniqueext 1767623060.984856 -r /var/lib/copr-rpmbuild/results/configs/child.cfg
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+INFO: Start(/var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575/open-fprintd-eh575.spec)  Config(fedora-42-x86_64)
+Start: clean chroot
+Finish: clean chroot
+Mock Version: 6.6
+INFO: Mock Version: 6.6
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/fedora-42-x86_64-bootstrap-1767623060.984856/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Guessed host environment type: unknown
+INFO: Using container image: registry.fedoraproject.org/fedora:42
+INFO: Pulling image: registry.fedoraproject.org/fedora:42
+INFO: Tagging container image as mock-bootstrap-43355413-eaa7-4c51-b8f0-e4bcf50b9dd3
+INFO: Checking that f1d53870078e2fab9ad64d1f95c119aee09951a62e97afe8b8489ddbde9246bc image matches host's architecture
+INFO: Copy content of container f1d53870078e2fab9ad64d1f95c119aee09951a62e97afe8b8489ddbde9246bc to /var/lib/mock/fedora-42-x86_64-bootstrap-1767623060.984856/root
+INFO: mounting f1d53870078e2fab9ad64d1f95c119aee09951a62e97afe8b8489ddbde9246bc with podman image mount
+INFO: image f1d53870078e2fab9ad64d1f95c119aee09951a62e97afe8b8489ddbde9246bc as /var/lib/containers/storage/overlay/fbb6c61300ea6c687da554a1144efb709d3adcc87fe2c7b908e1a7a8f7028e95/merged
+INFO: umounting image f1d53870078e2fab9ad64d1f95c119aee09951a62e97afe8b8489ddbde9246bc (/var/lib/containers/storage/overlay/fbb6c61300ea6c687da554a1144efb709d3adcc87fe2c7b908e1a7a8f7028e95/merged) with podman image umount
+INFO: Removing image mock-bootstrap-43355413-eaa7-4c51-b8f0-e4bcf50b9dd3
+INFO: Package manager dnf5 detected and used (fallback)
+INFO: Not updating bootstrap chroot, bootstrap_image_ready=True
+Start(bootstrap): creating root cache
+Finish(bootstrap): creating root cache
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/fedora-42-x86_64-1767623060.984856/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf5 detected and used (direct choice)
+INFO: Buildroot is handled by package management downloaded with a bootstrap image:
+  rpm-4.20.1-1.fc42.x86_64
+  rpm-sequoia-1.7.0-5.fc42.x86_64
+  dnf5-5.2.17.0-1.fc42.x86_64
+  dnf5-plugins-5.2.17.0-1.fc42.x86_64
+Start: installing minimal buildroot with dnf5
+Updating and loading repositories:
+ Copr repository                        100% |   7.3 KiB/s |   2.5 KiB |  00m00s
+ updates                                100% |   7.9 MiB/s |  10.7 MiB |  00m01s
+ fedora                                 100% |  15.8 MiB/s |  35.4 MiB |  00m02s
+Repositories loaded.
+Package                            Arch   Version                     Repository      Size
+Installing group/module packages:
+ bash                              x86_64 5.2.37-1.fc42               fedora       8.2 MiB
+ bzip2                             x86_64 1.0.8-20.fc42               fedora      99.3 KiB
+ coreutils                         x86_64 9.6-6.fc42                  updates      5.4 MiB
+ cpio                              x86_64 2.15-4.fc42                 fedora       1.1 MiB
+ diffutils                         x86_64 3.12-1.fc42                 updates      1.6 MiB
+ fedora-release-common             noarch 42-30                       updates     20.2 KiB
+ findutils                         x86_64 1:4.10.0-5.fc42             fedora       1.9 MiB
+ gawk                              x86_64 5.3.1-1.fc42                fedora       1.7 MiB
+ glibc-minimal-langpack            x86_64 2.41-12.fc42                updates      0.0   B
+ grep                              x86_64 3.11-10.fc42                fedora       1.0 MiB
+ gzip                              x86_64 1.13-3.fc42                 fedora     392.9 KiB
+ info                              x86_64 7.2-3.fc42                  fedora     357.9 KiB
+ patch                             x86_64 2.8-1.fc42                  updates    222.8 KiB
+ redhat-rpm-config                 noarch 342-4.fc42                  updates    185.5 KiB
+ rpm-build                         x86_64 4.20.1-1.fc42               fedora     168.7 KiB
+ sed                               x86_64 4.9-4.fc42                  fedora     857.3 KiB
+ shadow-utils                      x86_64 2:4.17.4-1.fc42             fedora       4.0 MiB
+ tar                               x86_64 2:1.35-5.fc42               fedora       3.0 MiB
+ unzip                             x86_64 6.0-66.fc42                 fedora     390.3 KiB
+ util-linux                        x86_64 2.40.4-8.fc42               updates      3.4 MiB
+ which                             x86_64 2.23-2.fc42                 updates     83.5 KiB
+ xz                                x86_64 1:5.8.1-4.fc42              updates      1.3 MiB
+Installing dependencies:
+ add-determinism                   x86_64 0.6.0-1.fc42                fedora       2.5 MiB
+ alternatives                      x86_64 1.33-3.fc42                 updates     62.2 KiB
+ ansible-srpm-macros               noarch 1-17.1.fc42                 fedora      35.7 KiB
+ audit-libs                        x86_64 4.1.2-2.fc42                updates    378.8 KiB
+ basesystem                        noarch 11-22.fc42                  fedora       0.0   B
+ binutils                          x86_64 2.44-12.fc42                updates     25.8 MiB
+ build-reproducibility-srpm-macros noarch 0.6.0-1.fc42                fedora     735.0   B
+ bzip2-libs                        x86_64 1.0.8-20.fc42               fedora      84.6 KiB
+ ca-certificates                   noarch 2025.2.80_v9.0.304-1.0.fc42 updates      2.7 MiB
+ coreutils-common                  x86_64 9.6-6.fc42                  updates     11.1 MiB
+ crypto-policies                   noarch 20251125-1.git3839d0e.fc42  updates    143.1 KiB
+ curl                              x86_64 8.11.1-6.fc42               updates    450.6 KiB
+ cyrus-sasl-lib                    x86_64 2.1.28-30.fc42              fedora       2.3 MiB
+ debugedit                         x86_64 5.1-7.fc42                  updates    192.7 KiB
+ dwz                               x86_64 0.16-1.fc42                 updates    287.1 KiB
+ ed                                x86_64 1.21-2.fc42                 fedora     146.5 KiB
+ efi-srpm-macros                   noarch 6-3.fc42                    updates     40.1 KiB
+ elfutils                          x86_64 0.194-1.fc42                updates      2.9 MiB
+ elfutils-debuginfod-client        x86_64 0.194-1.fc42                updates     83.9 KiB
+ elfutils-default-yama-scope       noarch 0.194-1.fc42                updates      1.8 KiB
+ elfutils-libelf                   x86_64 0.194-1.fc42                updates      1.1 MiB
+ elfutils-libs                     x86_64 0.194-1.fc42                updates    687.4 KiB
+ fedora-gpg-keys                   noarch 42-1                        fedora     128.2 KiB
+ fedora-release                    noarch 42-30                       updates      0.0   B
+ fedora-release-identity-basic     noarch 42-30                       updates    646.0   B
+ fedora-repos                      noarch 42-1                        fedora       4.9 KiB
+ file                              x86_64 5.46-3.fc42                 updates    100.2 KiB
+ file-libs                         x86_64 5.46-3.fc42                 updates     11.9 MiB
+ filesystem                        x86_64 3.18-47.fc42                updates    112.0   B
+ filesystem-srpm-macros            noarch 3.18-47.fc42                updates     38.2 KiB
+ fonts-srpm-macros                 noarch 1:2.0.5-22.fc42             updates     55.8 KiB
+ forge-srpm-macros                 noarch 0.4.0-2.fc42                fedora      38.9 KiB
+ fpc-srpm-macros                   noarch 1.3-14.fc42                 fedora     144.0   B
+ gdb-minimal                       x86_64 16.3-1.fc42                 updates     13.2 MiB
+ gdbm-libs                         x86_64 1:1.23-9.fc42               fedora     129.9 KiB
+ ghc-srpm-macros                   noarch 1.9.2-2.fc42                fedora     779.0   B
+ glibc                             x86_64 2.41-12.fc42                updates      6.6 MiB
+ glibc-common                      x86_64 2.41-12.fc42                updates      1.0 MiB
+ glibc-gconv-extra                 x86_64 2.41-12.fc42                updates      7.2 MiB
+ gmp                               x86_64 1:6.3.0-4.fc42              fedora     811.3 KiB
+ gnat-srpm-macros                  noarch 6-7.fc42                    fedora       1.0 KiB
+ gnulib-l10n                       noarch 20241231-1.fc42             updates    655.0 KiB
+ go-srpm-macros                    noarch 3.8.0-1.fc42                updates     61.9 KiB
+ jansson                           x86_64 2.14-2.fc42                 fedora      93.1 KiB
+ json-c                            x86_64 0.18-2.fc42                 fedora      86.7 KiB
+ kernel-srpm-macros                noarch 1.0-25.fc42                 fedora       1.9 KiB
+ keyutils-libs                     x86_64 1.6.3-5.fc42                fedora      58.3 KiB
+ krb5-libs                         x86_64 1.21.3-6.fc42               updates      2.3 MiB
+ libacl                            x86_64 2.3.2-3.fc42                fedora      38.3 KiB
+ libarchive                        x86_64 3.8.1-1.fc42                updates    955.2 KiB
+ libattr                           x86_64 2.5.2-5.fc42                fedora      27.1 KiB
+ libblkid                          x86_64 2.40.4-8.fc42               updates    262.4 KiB
+ libbrotli                         x86_64 1.2.0-1.fc42                updates    865.4 KiB
+ libcap                            x86_64 2.73-2.fc42                 fedora     207.1 KiB
+ libcap-ng                         x86_64 0.8.5-4.fc42                fedora      72.9 KiB
+ libcom_err                        x86_64 1.47.2-3.fc42               fedora      67.1 KiB
+ libcurl                           x86_64 8.11.1-6.fc42               updates    834.1 KiB
+ libeconf                          x86_64 0.7.6-2.fc42                updates     64.6 KiB
+ libevent                          x86_64 2.1.12-15.fc42              fedora     903.1 KiB
+ libfdisk                          x86_64 2.40.4-8.fc42               updates    372.3 KiB
+ libffi                            x86_64 3.4.6-5.fc42                fedora      82.3 KiB
+ libgcc                            x86_64 15.2.1-5.fc42               updates    266.6 KiB
+ libgomp                           x86_64 15.2.1-5.fc42               updates    541.5 KiB
+ libidn2                           x86_64 2.3.8-1.fc42                fedora     556.5 KiB
+ libmount                          x86_64 2.40.4-8.fc42               updates    356.3 KiB
+ libnghttp2                        x86_64 1.64.0-3.fc42               fedora     170.4 KiB
+ libpkgconf                        x86_64 2.3.0-2.fc42                fedora      78.1 KiB
+ libpsl                            x86_64 0.21.5-5.fc42               fedora      76.4 KiB
+ libselinux                        x86_64 3.8-3.fc42                  updates    193.1 KiB
+ libsemanage                       x86_64 3.8.1-2.fc42                updates    304.4 KiB
+ libsepol                          x86_64 3.8-1.fc42                  fedora     826.0 KiB
+ libsmartcols                      x86_64 2.40.4-8.fc42               updates    176.4 KiB
+ libssh                            x86_64 0.11.3-1.fc42               updates    567.1 KiB
+ libssh-config                     noarch 0.11.3-1.fc42               updates    277.0   B
+ libstdc++                         x86_64 15.2.1-5.fc42               updates      2.8 MiB
+ libtasn1                          x86_64 4.20.0-1.fc42               fedora     176.3 KiB
+ libtool-ltdl                      x86_64 2.5.4-4.fc42                fedora      70.1 KiB
+ libunistring                      x86_64 1.1-9.fc42                  fedora       1.7 MiB
+ libuuid                           x86_64 2.40.4-8.fc42               updates     37.3 KiB
+ libverto                          x86_64 0.3.2-10.fc42               fedora      25.4 KiB
+ libxcrypt                         x86_64 4.5.2-1.fc42                updates    285.3 KiB
+ libxml2                           x86_64 2.12.10-1.fc42              fedora       1.7 MiB
+ libzstd                           x86_64 1.5.7-1.fc42                fedora     807.8 KiB
+ lua-libs                          x86_64 5.4.8-4.fc42                updates    281.9 KiB
+ lua-srpm-macros                   noarch 1-15.fc42                   fedora       1.3 KiB
+ lz4-libs                          x86_64 1.10.0-2.fc42               fedora     157.4 KiB
+ mpfr                              x86_64 4.2.2-1.fc42                fedora     828.8 KiB
+ ncurses-base                      noarch 6.5-5.20250125.fc42         fedora     326.8 KiB
+ ncurses-libs                      x86_64 6.5-5.20250125.fc42         fedora     946.3 KiB
+ ocaml-srpm-macros                 noarch 10-4.fc42                   fedora       1.9 KiB
+ openblas-srpm-macros              noarch 2-19.fc42                   fedora     112.0   B
+ openldap                          x86_64 2.6.10-1.fc42               updates    655.8 KiB
+ openssl-libs                      x86_64 1:3.2.6-2.fc42              updates      7.8 MiB
+ p11-kit                           x86_64 0.25.8-1.fc42               updates      2.3 MiB
+ p11-kit-trust                     x86_64 0.25.8-1.fc42               updates    446.5 KiB
+ package-notes-srpm-macros         noarch 0.5-13.fc42                 fedora       1.6 KiB
+ pam-libs                          x86_64 1.7.0-6.fc42                updates    126.7 KiB
+ pcre2                             x86_64 10.46-1.fc42                updates    697.7 KiB
+ pcre2-syntax                      noarch 10.46-1.fc42                updates    275.3 KiB
+ perl-srpm-macros                  noarch 1-57.fc42                   fedora     861.0   B
+ pkgconf                           x86_64 2.3.0-2.fc42                fedora      88.5 KiB
+ pkgconf-m4                        noarch 2.3.0-2.fc42                fedora      14.4 KiB
+ pkgconf-pkg-config                x86_64 2.3.0-2.fc42                fedora     989.0   B
+ popt                              x86_64 1.19-8.fc42                 fedora     132.8 KiB
+ publicsuffix-list-dafsa           noarch 20250616-1.fc42             updates     69.1 KiB
+ pyproject-srpm-macros             noarch 1.18.6-1.fc42               updates      1.9 KiB
+ python-srpm-macros                noarch 3.13-5.fc42                 updates     51.0 KiB
+ qt5-srpm-macros                   noarch 5.15.18-1.fc42              updates    500.0   B
+ qt6-srpm-macros                   noarch 6.9.3-1.fc42                updates    464.0   B
+ readline                          x86_64 8.2-13.fc42                 fedora     485.0 KiB
+ rpm                               x86_64 4.20.1-1.fc42               fedora       3.1 MiB
+ rpm-build-libs                    x86_64 4.20.1-1.fc42               fedora     206.6 KiB
+ rpm-libs                          x86_64 4.20.1-1.fc42               fedora     721.8 KiB
+ rpm-sequoia                       x86_64 1.7.0-5.fc42                fedora       2.4 MiB
+ rust-srpm-macros                  noarch 28.4-1.fc42                 updates      5.5 KiB
+ setup                             noarch 2.15.0-13.fc42              fedora     720.9 KiB
+ sqlite-libs                       x86_64 3.47.2-5.fc42               updates      1.5 MiB
+ systemd-libs                      x86_64 257.10-1.fc42               updates      2.2 MiB
+ systemd-standalone-sysusers       x86_64 257.10-1.fc42               updates    277.3 KiB
+ tree-sitter-srpm-macros           noarch 0.1.0-8.fc42                fedora       6.5 KiB
+ util-linux-core                   x86_64 2.40.4-8.fc42               updates      1.4 MiB
+ xxhash-libs                       x86_64 0.8.3-2.fc42                fedora      90.2 KiB
+ xz-libs                           x86_64 1:5.8.1-4.fc42              updates    217.8 KiB
+ zig-srpm-macros                   noarch 1-4.fc42                    fedora       1.1 KiB
+ zip                               x86_64 3.0-43.fc42                 fedora     698.5 KiB
+ zlib-ng-compat                    x86_64 2.2.5-2.fc42                updates    137.6 KiB
+ zstd                              x86_64 1.5.7-1.fc42                fedora       1.7 MiB
+Installing groups:
+ Buildsystem building group                                                               
+
+Transaction Summary:
+ Installing:       149 packages
+
+Total size of inbound packages is 52 MiB. Need to download 52 MiB.
+After this operation, 178 MiB extra will be used (install 178 MiB, remove 0 B).
+[  1/149] cpio-0:2.15-4.fc42.x86_64     100% |  22.1 MiB/s | 294.6 KiB |  00m00s
+[  2/149] bzip2-0:1.0.8-20.fc42.x86_64  100% |   3.9 MiB/s |  52.1 KiB |  00m00s
+[  3/149] bash-0:5.2.37-1.fc42.x86_64   100% |  82.2 MiB/s |   1.8 MiB |  00m00s
+[  4/149] findutils-1:4.10.0-5.fc42.x86 100% |  59.8 MiB/s | 551.5 KiB |  00m00s
+[  5/149] grep-0:3.11-10.fc42.x86_64    100% |  29.3 MiB/s | 300.1 KiB |  00m00s
+[  6/149] gzip-0:1.13-3.fc42.x86_64     100% |  55.5 MiB/s | 170.4 KiB |  00m00s
+[  7/149] info-0:7.2-3.fc42.x86_64      100% |  89.8 MiB/s | 183.8 KiB |  00m00s
+[  8/149] rpm-build-0:4.20.1-1.fc42.x86 100% |  39.9 MiB/s |  81.8 KiB |  00m00s
+[  9/149] sed-0:4.9-4.fc42.x86_64       100% | 154.9 MiB/s | 317.3 KiB |  00m00s
+[ 10/149] shadow-utils-2:4.17.4-1.fc42. 100% | 220.4 MiB/s |   1.3 MiB |  00m00s
+[ 11/149] unzip-0:6.0-66.fc42.x86_64    100% |  36.1 MiB/s | 184.6 KiB |  00m00s
+[ 12/149] tar-2:1.35-5.fc42.x86_64      100% | 105.3 MiB/s | 862.5 KiB |  00m00s
+[ 13/149] diffutils-0:3.12-1.fc42.x86_6 100% |  76.7 MiB/s | 392.6 KiB |  00m00s
+[ 14/149] coreutils-0:9.6-6.fc42.x86_64 100% | 142.3 MiB/s |   1.1 MiB |  00m00s
+[ 15/149] fedora-release-common-0:42-30 100% |   4.0 MiB/s |  24.5 KiB |  00m00s
+[ 16/149] gawk-0:5.3.1-1.fc42.x86_64    100% | 179.8 MiB/s |   1.1 MiB |  00m00s
+[ 17/149] glibc-minimal-langpack-0:2.41 100% |  16.3 MiB/s |  83.4 KiB |  00m00s
+[ 18/149] patch-0:2.8-1.fc42.x86_64     100% |  22.2 MiB/s | 113.5 KiB |  00m00s
+[ 19/149] redhat-rpm-config-0:342-4.fc4 100% |  26.4 MiB/s |  81.1 KiB |  00m00s
+[ 20/149] which-0:2.23-2.fc42.x86_64    100% |  20.4 MiB/s |  41.7 KiB |  00m00s
+[ 21/149] util-linux-0:2.40.4-8.fc42.x8 100% | 164.6 MiB/s |   1.2 MiB |  00m00s
+[ 22/149] xz-1:5.8.1-4.fc42.x86_64      100% |  79.9 MiB/s | 572.5 KiB |  00m00s
+[ 23/149] ncurses-libs-0:6.5-5.20250125 100% |  46.7 MiB/s | 335.0 KiB |  00m00s
+[ 24/149] bzip2-libs-0:1.0.8-20.fc42.x8 100% |  10.6 MiB/s |  43.6 KiB |  00m00s
+[ 25/149] popt-0:1.19-8.fc42.x86_64     100% |  32.2 MiB/s |  65.9 KiB |  00m00s
+[ 26/149] readline-0:8.2-13.fc42.x86_64 100% |  70.1 MiB/s | 215.2 KiB |  00m00s
+[ 27/149] rpm-0:4.20.1-1.fc42.x86_64    100% | 133.9 MiB/s | 548.4 KiB |  00m00s
+[ 28/149] rpm-build-libs-0:4.20.1-1.fc4 100% |  24.3 MiB/s |  99.7 KiB |  00m00s
+[ 29/149] rpm-libs-0:4.20.1-1.fc42.x86_ 100% |  76.2 MiB/s | 312.0 KiB |  00m00s
+[ 30/149] libacl-0:2.3.2-3.fc42.x86_64  100% |  11.2 MiB/s |  23.0 KiB |  00m00s
+[ 31/149] zstd-0:1.5.7-1.fc42.x86_64    100% | 118.6 MiB/s | 485.9 KiB |  00m00s
+[ 32/149] setup-0:2.15.0-13.fc42.noarch 100% |  38.0 MiB/s | 155.8 KiB |  00m00s
+[ 33/149] gmp-1:6.3.0-4.fc42.x86_64     100% |  77.6 MiB/s | 317.7 KiB |  00m00s
+[ 34/149] libattr-0:2.5.2-5.fc42.x86_64 100% |   5.6 MiB/s |  17.1 KiB |  00m00s
+[ 35/149] coreutils-common-0:9.6-6.fc42 100% | 208.4 MiB/s |   2.1 MiB |  00m00s
+[ 36/149] fedora-repos-0:42-1.noarch    100% |   3.0 MiB/s |   9.2 KiB |  00m00s
+[ 37/149] libcap-0:2.73-2.fc42.x86_64   100% |  16.5 MiB/s |  84.3 KiB |  00m00s
+[ 38/149] mpfr-0:4.2.2-1.fc42.x86_64    100% |  84.3 MiB/s | 345.3 KiB |  00m00s
+[ 39/149] glibc-common-0:2.41-12.fc42.x 100% |  72.3 MiB/s | 370.1 KiB |  00m00s
+[ 40/149] ed-0:1.21-2.fc42.x86_64       100% |  20.0 MiB/s |  82.0 KiB |  00m00s
+[ 41/149] ansible-srpm-macros-0:1-17.1. 100% |  19.8 MiB/s |  20.3 KiB |  00m00s
+[ 42/149] build-reproducibility-srpm-ma 100% |  11.4 MiB/s |  11.7 KiB |  00m00s
+[ 43/149] forge-srpm-macros-0:0.4.0-2.f 100% |   9.7 MiB/s |  19.9 KiB |  00m00s
+[ 44/149] fpc-srpm-macros-0:1.3-14.fc42 100% |   7.8 MiB/s |   8.0 KiB |  00m00s
+[ 45/149] ghc-srpm-macros-0:1.9.2-2.fc4 100% |   8.9 MiB/s |   9.2 KiB |  00m00s
+[ 46/149] gnat-srpm-macros-0:6-7.fc42.n 100% |   8.4 MiB/s |   8.6 KiB |  00m00s
+[ 47/149] kernel-srpm-macros-0:1.0-25.f 100% |   9.6 MiB/s |   9.9 KiB |  00m00s
+[ 48/149] lua-srpm-macros-0:1-15.fc42.n 100% |   8.7 MiB/s |   8.9 KiB |  00m00s
+[ 49/149] ocaml-srpm-macros-0:10-4.fc42 100% |   9.0 MiB/s |   9.2 KiB |  00m00s
+[ 50/149] openblas-srpm-macros-0:2-19.f 100% |   7.6 MiB/s |   7.8 KiB |  00m00s
+[ 51/149] package-notes-srpm-macros-0:0 100% |   9.0 MiB/s |   9.3 KiB |  00m00s
+[ 52/149] perl-srpm-macros-0:1-57.fc42. 100% |   8.3 MiB/s |   8.5 KiB |  00m00s
+[ 53/149] tree-sitter-srpm-macros-0:0.1 100% |  11.0 MiB/s |  11.2 KiB |  00m00s
+[ 54/149] zig-srpm-macros-0:1-4.fc42.no 100% |   8.1 MiB/s |   8.2 KiB |  00m00s
+[ 55/149] zip-0:3.0-43.fc42.x86_64      100% |  85.8 MiB/s | 263.5 KiB |  00m00s
+[ 56/149] libcap-ng-0:0.8.5-4.fc42.x86_ 100% |  15.7 MiB/s |  32.2 KiB |  00m00s
+[ 57/149] util-linux-core-0:2.40.4-8.fc 100% | 129.0 MiB/s | 528.5 KiB |  00m00s
+[ 58/149] xz-libs-1:5.8.1-4.fc42.x86_64 100% |  36.7 MiB/s | 112.8 KiB |  00m00s
+[ 59/149] ncurses-base-0:6.5-5.20250125 100% |  28.7 MiB/s |  88.1 KiB |  00m00s
+[ 60/149] libzstd-0:1.5.7-1.fc42.x86_64 100% |  51.2 MiB/s | 314.8 KiB |  00m00s
+[ 61/149] rpm-sequoia-0:1.7.0-5.fc42.x8 100% | 148.3 MiB/s | 911.1 KiB |  00m00s
+[ 62/149] lz4-libs-0:1.10.0-2.fc42.x86_ 100% |  12.7 MiB/s |  78.1 KiB |  00m00s
+[ 63/149] gnulib-l10n-0:20241231-1.fc42 100% |  36.6 MiB/s | 150.1 KiB |  00m00s
+[ 64/149] fedora-gpg-keys-0:42-1.noarch 100% |  44.1 MiB/s | 135.6 KiB |  00m00s
+[ 65/149] add-determinism-0:0.6.0-1.fc4 100% | 149.5 MiB/s | 918.3 KiB |  00m00s
+[ 66/149] basesystem-0:11-22.fc42.noarc 100% |   7.1 MiB/s |   7.3 KiB |  00m00s
+[ 67/149] glibc-gconv-extra-0:2.41-12.f 100% | 116.3 MiB/s |   1.6 MiB |  00m00s
+[ 68/149] libgcc-0:15.2.1-5.fc42.x86_64 100% |  14.7 MiB/s | 135.1 KiB |  00m00s
+[ 69/149] glibc-0:2.41-12.fc42.x86_64   100% | 123.9 MiB/s |   2.2 MiB |  00m00s
+[ 70/149] zlib-ng-compat-0:2.2.5-2.fc42 100% |  12.9 MiB/s |  79.2 KiB |  00m00s
+[ 71/149] libstdc++-0:15.2.1-5.fc42.x86 100% | 100.0 MiB/s | 921.4 KiB |  00m00s
+[ 72/149] libselinux-0:3.8-3.fc42.x86_6 100% |  15.7 MiB/s |  96.7 KiB |  00m00s
+[ 73/149] libsepol-0:3.8-1.fc42.x86_64  100% |  56.8 MiB/s | 348.9 KiB |  00m00s
+[ 74/149] audit-libs-0:4.1.2-2.fc42.x86 100% |  27.0 MiB/s | 138.5 KiB |  00m00s
+[ 75/149] filesystem-0:3.18-47.fc42.x86 100% | 111.1 MiB/s |   1.3 MiB |  00m00s
+[ 76/149] libeconf-0:0.7.6-2.fc42.x86_6 100% |   4.3 MiB/s |  35.2 KiB |  00m00s
+[ 77/149] libsemanage-0:3.8.1-2.fc42.x8 100% |  15.0 MiB/s | 123.2 KiB |  00m00s
+[ 78/149] pam-libs-0:1.7.0-6.fc42.x86_6 100% |  28.1 MiB/s |  57.5 KiB |  00m00s
+[ 79/149] libxcrypt-0:4.5.2-1.fc42.x86_ 100% |  31.3 MiB/s | 128.1 KiB |  00m00s
+[ 80/149] lua-libs-0:5.4.8-4.fc42.x86_6 100% |  32.5 MiB/s | 133.2 KiB |  00m00s
+[ 81/149] sqlite-libs-0:3.47.2-5.fc42.x 100% | 105.2 MiB/s | 753.8 KiB |  00m00s
+[ 82/149] openssl-libs-1:3.2.6-2.fc42.x 100% | 179.6 MiB/s |   2.3 MiB |  00m00s
+[ 83/149] elfutils-libelf-0:0.194-1.fc4 100% |  22.3 MiB/s | 205.2 KiB |  00m00s
+[ 84/149] elfutils-libs-0:0.194-1.fc42. 100% |  53.1 MiB/s | 271.6 KiB |  00m00s
+[ 85/149] elfutils-debuginfod-client-0: 100% |  22.9 MiB/s |  46.9 KiB |  00m00s
+[ 86/149] elfutils-0:0.194-1.fc42.x86_6 100% | 112.4 MiB/s | 575.4 KiB |  00m00s
+[ 87/149] json-c-0:0.18-2.fc42.x86_64   100% |  14.6 MiB/s |  44.9 KiB |  00m00s
+[ 88/149] file-libs-0:5.46-3.fc42.x86_6 100% | 165.9 MiB/s | 849.5 KiB |  00m00s
+[ 89/149] file-0:5.46-3.fc42.x86_64     100% |  15.8 MiB/s |  48.6 KiB |  00m00s
+[ 90/149] libgomp-0:15.2.1-5.fc42.x86_6 100% |  91.7 MiB/s | 375.4 KiB |  00m00s
+[ 91/149] jansson-0:2.14-2.fc42.x86_64  100% |  22.3 MiB/s |  45.7 KiB |  00m00s
+[ 92/149] debugedit-0:5.1-7.fc42.x86_64 100% |  25.6 MiB/s |  78.8 KiB |  00m00s
+[ 93/149] libarchive-0:3.8.1-1.fc42.x86 100% | 102.9 MiB/s | 421.6 KiB |  00m00s
+[ 94/149] libxml2-0:2.12.10-1.fc42.x86_ 100% | 133.5 MiB/s | 683.7 KiB |  00m00s
+[ 95/149] pkgconf-pkg-config-0:2.3.0-2. 100% |   3.2 MiB/s |   9.9 KiB |  00m00s
+[ 96/149] pkgconf-0:2.3.0-2.fc42.x86_64 100% |  21.9 MiB/s |  44.9 KiB |  00m00s
+[ 97/149] pkgconf-m4-0:2.3.0-2.fc42.noa 100% |   7.0 MiB/s |  14.2 KiB |  00m00s
+[ 98/149] binutils-0:2.44-12.fc42.x86_6 100% | 274.8 MiB/s |   5.8 MiB |  00m00s
+[ 99/149] libpkgconf-0:2.3.0-2.fc42.x86 100% |   5.4 MiB/s |  38.4 KiB |  00m00s
+[100/149] curl-0:8.11.1-6.fc42.x86_64   100% |  26.9 MiB/s | 220.0 KiB |  00m00s
+[101/149] pcre2-0:10.46-1.fc42.x86_64   100% |  85.3 MiB/s | 262.2 KiB |  00m00s
+[102/149] pcre2-syntax-0:10.46-1.fc42.n 100% |  52.7 MiB/s | 162.0 KiB |  00m00s
+[103/149] libblkid-0:2.40.4-8.fc42.x86_ 100% |  39.7 MiB/s | 122.0 KiB |  00m00s
+[104/149] libuuid-0:2.40.4-8.fc42.x86_6 100% |  24.8 MiB/s |  25.4 KiB |  00m00s
+[105/149] libmount-0:2.40.4-8.fc42.x86_ 100% |  50.1 MiB/s | 153.8 KiB |  00m00s
+[106/149] libsmartcols-0:2.40.4-8.fc42. 100% |  39.6 MiB/s |  81.1 KiB |  00m00s
+[107/149] systemd-libs-0:257.10-1.fc42. 100% | 197.6 MiB/s | 809.6 KiB |  00m00s
+[108/149] libfdisk-0:2.40.4-8.fc42.x86_ 100% |  38.6 MiB/s | 158.0 KiB |  00m00s
+[109/149] dwz-0:0.16-1.fc42.x86_64      100% |  33.1 MiB/s | 135.5 KiB |  00m00s
+[110/149] efi-srpm-macros-0:6-3.fc42.no 100% |  11.0 MiB/s |  22.5 KiB |  00m00s
+[111/149] filesystem-srpm-macros-0:3.18 100% |  25.5 MiB/s |  26.1 KiB |  00m00s
+[112/149] fonts-srpm-macros-1:2.0.5-22. 100% |  13.3 MiB/s |  27.2 KiB |  00m00s
+[113/149] go-srpm-macros-0:3.8.0-1.fc42 100% |  13.8 MiB/s |  28.3 KiB |  00m00s
+[114/149] pyproject-srpm-macros-0:1.18. 100% |  13.0 MiB/s |  13.3 KiB |  00m00s
+[115/149] python-srpm-macros-0:3.13-5.f 100% |  11.0 MiB/s |  22.5 KiB |  00m00s
+[116/149] qt5-srpm-macros-0:5.15.18-1.f 100% |   8.4 MiB/s |   8.6 KiB |  00m00s
+[117/149] qt6-srpm-macros-0:6.9.3-1.fc4 100% |   9.0 MiB/s |   9.2 KiB |  00m00s
+[118/149] rust-srpm-macros-0:28.4-1.fc4 100% |  10.6 MiB/s |  10.8 KiB |  00m00s
+[119/149] crypto-policies-0:20251125-1. 100% |  30.8 MiB/s |  94.7 KiB |  00m00s
+[120/149] ca-certificates-0:2025.2.80_v 100% | 190.1 MiB/s | 973.5 KiB |  00m00s
+[121/149] elfutils-default-yama-scope-0 100% |   3.0 MiB/s |  12.4 KiB |  00m00s
+[122/149] p11-kit-0:0.25.8-1.fc42.x86_6 100% | 163.9 MiB/s | 503.5 KiB |  00m00s
+[123/149] libffi-0:3.4.6-5.fc42.x86_64  100% |  13.0 MiB/s |  39.9 KiB |  00m00s
+[124/149] libtasn1-0:4.20.0-1.fc42.x86_ 100% |  18.3 MiB/s |  75.0 KiB |  00m00s
+[125/149] p11-kit-trust-0:0.25.8-1.fc42 100% |  68.0 MiB/s | 139.2 KiB |  00m00s
+[126/149] alternatives-0:1.33-3.fc42.x8 100% |  19.9 MiB/s |  40.8 KiB |  00m00s
+[127/149] fedora-release-0:42-30.noarch 100% |  13.2 MiB/s |  13.5 KiB |  00m00s
+[128/149] systemd-standalone-sysusers-0 100% |  75.1 MiB/s | 153.7 KiB |  00m00s
+[129/149] xxhash-libs-0:0.8.3-2.fc42.x8 100% |  19.1 MiB/s |  39.1 KiB |  00m00s
+[130/149] fedora-release-identity-basic 100% |   4.7 MiB/s |  14.3 KiB |  00m00s
+[131/149] libcurl-0:8.11.1-6.fc42.x86_6 100% |  90.7 MiB/s | 371.7 KiB |  00m00s
+[132/149] libssh-0:0.11.3-1.fc42.x86_64 100% |  56.9 MiB/s | 233.0 KiB |  00m00s
+[133/149] libidn2-0:2.3.8-1.fc42.x86_64 100% |  42.7 MiB/s | 174.8 KiB |  00m00s
+[134/149] gdb-minimal-0:16.3-1.fc42.x86 100% | 275.5 MiB/s |   4.4 MiB |  00m00s
+[135/149] libnghttp2-0:1.64.0-3.fc42.x8 100% |  10.8 MiB/s |  77.7 KiB |  00m00s
+[136/149] libpsl-0:0.21.5-5.fc42.x86_64 100% |  10.4 MiB/s |  64.0 KiB |  00m00s
+[137/149] libssh-config-0:0.11.3-1.fc42 100% |   8.9 MiB/s |   9.1 KiB |  00m00s
+[138/149] publicsuffix-list-dafsa-0:202 100% |  28.9 MiB/s |  59.2 KiB |  00m00s
+[139/149] libunistring-0:1.1-9.fc42.x86 100% | 132.4 MiB/s | 542.5 KiB |  00m00s
+[140/149] krb5-libs-0:1.21.3-6.fc42.x86 100% | 148.4 MiB/s | 759.8 KiB |  00m00s
+[141/149] keyutils-libs-0:1.6.3-5.fc42. 100% |  10.3 MiB/s |  31.5 KiB |  00m00s
+[142/149] libcom_err-0:1.47.2-3.fc42.x8 100% |  13.1 MiB/s |  26.9 KiB |  00m00s
+[143/149] libverto-0:0.3.2-10.fc42.x86_ 100% |  10.2 MiB/s |  20.8 KiB |  00m00s
+[144/149] libbrotli-0:1.2.0-1.fc42.x86_ 100% | 113.7 MiB/s | 349.4 KiB |  00m00s
+[145/149] openldap-0:2.6.10-1.fc42.x86_ 100% |  84.2 MiB/s | 258.6 KiB |  00m00s
+[146/149] cyrus-sasl-lib-0:2.1.28-30.fc 100% | 193.7 MiB/s | 793.5 KiB |  00m00s
+[147/149] libtool-ltdl-0:2.5.4-4.fc42.x 100% |  11.8 MiB/s |  36.2 KiB |  00m00s
+[148/149] libevent-0:2.1.12-15.fc42.x86 100% |  63.5 MiB/s | 260.2 KiB |  00m00s
+[149/149] gdbm-libs-1:1.23-9.fc42.x86_6 100% |  27.8 MiB/s |  57.0 KiB |  00m00s
+--------------------------------------------------------------------------------
+[149/149] Total                         100% | 201.5 MiB/s |  52.4 MiB |  00m00s
+Running transaction
+Importing OpenPGP key 0x105EF944:
+ UserID     : "Fedora (42) <fedora-42-primary@fedoraproject.org>"
+ Fingerprint: B0F4950458F69E1150C6C5EDC8AC4916105EF944
+ From       : file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-42-primary
+The key was successfully imported.
+[  1/151] Verify package files          100% | 832.0   B/s | 149.0   B |  00m00s
+[  2/151] Prepare transaction           100% |   4.2 KiB/s | 149.0   B |  00m00s
+[  3/151] Installing libgcc-0:15.2.1-5. 100% | 262.0 MiB/s | 268.3 KiB |  00m00s
+[  4/151] Installing publicsuffix-list- 100% |   0.0   B/s |  69.8 KiB |  00m00s
+[  5/151] Installing libssh-config-0:0. 100% |   0.0   B/s | 816.0   B |  00m00s
+[  6/151] Installing fedora-release-ide 100% |   0.0   B/s | 904.0   B |  00m00s
+[  7/151] Installing fedora-gpg-keys-0: 100% |  42.7 MiB/s | 174.8 KiB |  00m00s
+[  8/151] Installing fedora-repos-0:42- 100% |   0.0   B/s |   5.7 KiB |  00m00s
+[  9/151] Installing fedora-release-com 100% |  23.9 MiB/s |  24.5 KiB |  00m00s
+[ 10/151] Installing fedora-release-0:4 100% |   9.3 KiB/s | 124.0   B |  00m00s
+>>> Running sysusers scriptlet: setup-0:2.15.0-13.fc42.noarch                   
+>>> Finished sysusers scriptlet: setup-0:2.15.0-13.fc42.noarch                  
+>>> Scriptlet output:                                                           
+>>> Creating group 'adm' with GID 4.                                            
+>>> Creating group 'audio' with GID 63.                                         
+>>> Creating group 'bin' with GID 1.                                            
+>>> Creating group 'cdrom' with GID 11.                                         
+>>> Creating group 'clock' with GID 103.                                        
+>>> Creating group 'daemon' with GID 2.                                         
+>>> Creating group 'dialout' with GID 18.                                       
+>>> Creating group 'disk' with GID 6.                                           
+>>> Creating group 'floppy' with GID 19.                                        
+>>> Creating group 'ftp' with GID 50.                                           
+>>> Creating group 'games' with GID 20.                                         
+>>> Creating group 'input' with GID 104.                                        
+>>> Creating group 'kmem' with GID 9.                                           
+>>> Creating group 'kvm' with GID 36.                                           
+>>> Creating group 'lock' with GID 54.                                          
+>>> Creating group 'lp' with GID 7.                                             
+>>> Creating group 'mail' with GID 12.                                          
+>>> Creating group 'man' with GID 15.                                           
+>>> Creating group 'mem' with GID 8.                                            
+>>> Creating group 'nobody' with GID 65534.                                     
+>>> Creating group 'render' with GID 105.                                       
+>>> Creating group 'root' with GID 0.                                           
+>>> Creating group 'sgx' with GID 106.                                          
+>>> Creating group 'sys' with GID 3.                                            
+>>> Creating group 'tape' with GID 33.                                          
+>>> Creating group 'tty' with GID 5.                                            
+>>> Creating group 'users' with GID 100.                                        
+>>> Creating group 'utmp' with GID 22.                                          
+>>> Creating group 'video' with GID 39.                                         
+>>> Creating group 'wheel' with GID 10.                                         
+>>>                                                                             
+>>> Running sysusers scriptlet: setup-0:2.15.0-13.fc42.noarch                   
+>>> Finished sysusers scriptlet: setup-0:2.15.0-13.fc42.noarch                  
+>>> Scriptlet output:                                                           
+>>> Creating user 'adm' (adm) with UID 3 and GID 4.                             
+>>> Creating user 'bin' (bin) with UID 1 and GID 1.                             
+>>> Creating user 'daemon' (daemon) with UID 2 and GID 2.                       
+>>> Creating user 'ftp' (FTP User) with UID 14 and GID 50.                      
+>>> Creating user 'games' (games) with UID 12 and GID 20.                       
+>>> Creating user 'halt' (halt) with UID 7 and GID 0.                           
+>>> Creating user 'lp' (lp) with UID 4 and GID 7.                               
+>>> Creating user 'mail' (mail) with UID 8 and GID 12.                          
+>>> Creating user 'nobody' (Kernel Overflow User) with UID 65534 and GID 65534. 
+>>> Creating user 'operator' (operator) with UID 11 and GID 0.                  
+>>> Creating user 'root' (Super User) with UID 0 and GID 0.                     
+>>> Creating user 'shutdown' (shutdown) with UID 6 and GID 0.                   
+>>> Creating user 'sync' (sync) with UID 5 and GID 0.                           
+>>>                                                                             
+[ 11/151] Installing setup-0:2.15.0-13. 100% |  50.7 MiB/s | 726.7 KiB |  00m00s
+>>> [RPM] /etc/hosts created as /etc/hosts.rpmnew                               
+[ 12/151] Installing filesystem-0:3.18- 100% |   2.8 MiB/s | 212.8 KiB |  00m00s
+[ 13/151] Installing basesystem-0:11-22 100% |   0.0   B/s | 124.0   B |  00m00s
+[ 14/151] Installing rust-srpm-macros-0 100% |   0.0   B/s |   6.4 KiB |  00m00s
+[ 15/151] Installing qt6-srpm-macros-0: 100% |   0.0   B/s | 740.0   B |  00m00s
+[ 16/151] Installing qt5-srpm-macros-0: 100% |   0.0   B/s | 776.0   B |  00m00s
+[ 17/151] Installing pcre2-syntax-0:10. 100% | 271.2 MiB/s | 277.8 KiB |  00m00s
+[ 18/151] Installing pkgconf-m4-0:2.3.0 100% |   0.0   B/s |  14.8 KiB |  00m00s
+[ 19/151] Installing gnulib-l10n-0:2024 100% | 215.5 MiB/s | 661.9 KiB |  00m00s
+[ 20/151] Installing coreutils-common-0 100% | 413.1 MiB/s |  11.2 MiB |  00m00s
+[ 21/151] Installing ncurses-base-0:6.5 100% |  86.0 MiB/s | 352.2 KiB |  00m00s
+[ 22/151] Installing glibc-minimal-lang 100% |   0.0   B/s | 124.0   B |  00m00s
+[ 23/151] Installing ncurses-libs-0:6.5 100% | 232.6 MiB/s | 952.8 KiB |  00m00s
+[ 24/151] Installing glibc-0:2.41-12.fc 100% | 214.6 MiB/s |   6.7 MiB |  00m00s
+[ 25/151] Installing bash-0:5.2.37-1.fc 100% | 281.7 MiB/s |   8.2 MiB |  00m00s
+[ 26/151] Installing glibc-common-0:2.4 100% |  60.0 MiB/s |   1.0 MiB |  00m00s
+[ 27/151] Installing glibc-gconv-extra- 100% | 270.7 MiB/s |   7.3 MiB |  00m00s
+[ 28/151] Installing zlib-ng-compat-0:2 100% | 135.2 MiB/s | 138.4 KiB |  00m00s
+[ 29/151] Installing bzip2-libs-0:1.0.8 100% |  83.7 MiB/s |  85.7 KiB |  00m00s
+[ 30/151] Installing xz-libs-1:5.8.1-4. 100% | 213.8 MiB/s | 218.9 KiB |  00m00s
+[ 31/151] Installing libuuid-0:2.40.4-8 100% |   0.0   B/s |  38.3 KiB |  00m00s
+[ 32/151] Installing libblkid-0:2.40.4- 100% | 257.3 MiB/s | 263.5 KiB |  00m00s
+[ 33/151] Installing popt-0:1.19-8.fc42 100% |  68.1 MiB/s | 139.4 KiB |  00m00s
+[ 34/151] Installing readline-0:8.2-13. 100% | 237.9 MiB/s | 487.1 KiB |  00m00s
+[ 35/151] Installing gmp-1:6.3.0-4.fc42 100% | 397.2 MiB/s | 813.5 KiB |  00m00s
+[ 36/151] Installing libzstd-0:1.5.7-1. 100% | 395.1 MiB/s | 809.1 KiB |  00m00s
+[ 37/151] Installing elfutils-libelf-0: 100% | 373.7 MiB/s |   1.1 MiB |  00m00s
+[ 38/151] Installing libstdc++-0:15.2.1 100% | 405.2 MiB/s |   2.8 MiB |  00m00s
+[ 39/151] Installing libxcrypt-0:4.5.2- 100% | 281.3 MiB/s | 288.0 KiB |  00m00s
+[ 40/151] Installing libattr-0:2.5.2-5. 100% |   0.0   B/s |  28.1 KiB |  00m00s
+[ 41/151] Installing libacl-0:2.3.2-3.f 100% |   0.0   B/s |  39.2 KiB |  00m00s
+[ 42/151] Installing dwz-0:0.16-1.fc42. 100% |  21.7 MiB/s | 288.5 KiB |  00m00s
+[ 43/151] Installing mpfr-0:4.2.2-1.fc4 100% | 270.3 MiB/s | 830.4 KiB |  00m00s
+[ 44/151] Installing gawk-0:5.3.1-1.fc4 100% |  94.2 MiB/s |   1.7 MiB |  00m00s
+[ 45/151] Installing unzip-0:6.0-66.fc4 100% |  27.5 MiB/s | 393.8 KiB |  00m00s
+[ 46/151] Installing file-libs-0:5.46-3 100% | 697.5 MiB/s |  11.9 MiB |  00m00s
+[ 47/151] Installing file-0:5.46-3.fc42 100% |   5.0 MiB/s | 101.7 KiB |  00m00s
+[ 48/151] Installing crypto-policies-0: 100% |  41.0 MiB/s | 168.1 KiB |  00m00s
+[ 49/151] Installing libcap-ng-0:0.8.5- 100% |  73.1 MiB/s |  74.8 KiB |  00m00s
+[ 50/151] Installing audit-libs-0:4.1.2 100% | 186.3 MiB/s | 381.5 KiB |  00m00s
+[ 51/151] Installing lz4-libs-0:1.10.0- 100% | 154.7 MiB/s | 158.5 KiB |  00m00s
+[ 52/151] Installing libsepol-0:3.8-1.f 100% | 269.2 MiB/s | 827.0 KiB |  00m00s
+[ 53/151] Installing libeconf-0:0.7.6-2 100% |  64.7 MiB/s |  66.2 KiB |  00m00s
+[ 54/151] Installing pam-libs-0:1.7.0-6 100% | 126.1 MiB/s | 129.1 KiB |  00m00s
+[ 55/151] Installing libcap-0:2.73-2.fc 100% |  14.8 MiB/s | 212.1 KiB |  00m00s
+[ 56/151] Installing systemd-libs-0:257 100% | 372.7 MiB/s |   2.2 MiB |  00m00s
+[ 57/151] Installing lua-libs-0:5.4.8-4 100% | 276.7 MiB/s | 283.3 KiB |  00m00s
+[ 58/151] Installing pcre2-0:10.46-1.fc 100% | 341.4 MiB/s | 699.1 KiB |  00m00s
+[ 59/151] Installing libselinux-0:3.8-3 100% | 189.8 MiB/s | 194.3 KiB |  00m00s
+[ 60/151] Installing grep-0:3.11-10.fc4 100% |  62.7 MiB/s |   1.0 MiB |  00m00s
+[ 61/151] Installing findutils-1:4.10.0 100% | 104.1 MiB/s |   1.9 MiB |  00m00s
+[ 62/151] Installing sed-0:4.9-4.fc42.x 100% |  56.3 MiB/s | 865.5 KiB |  00m00s
+[ 63/151] Installing xz-1:5.8.1-4.fc42. 100% |  78.3 MiB/s |   1.3 MiB |  00m00s
+[ 64/151] Installing libmount-0:2.40.4- 100% | 348.9 MiB/s | 357.3 KiB |  00m00s
+[ 65/151] Installing libsmartcols-0:2.4 100% | 173.4 MiB/s | 177.5 KiB |  00m00s
+[ 66/151] Installing libffi-0:3.4.6-5.f 100% |  81.7 MiB/s |  83.7 KiB |  00m00s
+[ 67/151] Installing libtasn1-0:4.20.0- 100% | 173.9 MiB/s | 178.1 KiB |  00m00s
+[ 68/151] Installing p11-kit-0:0.25.8-1 100% | 114.5 MiB/s |   2.3 MiB |  00m00s
+[ 69/151] Installing alternatives-0:1.3 100% |   5.2 MiB/s |  63.8 KiB |  00m00s
+[ 70/151] Installing libunistring-0:1.1 100% | 431.7 MiB/s |   1.7 MiB |  00m00s
+[ 71/151] Installing libidn2-0:2.3.8-1. 100% | 183.2 MiB/s | 562.7 KiB |  00m00s
+[ 72/151] Installing libpsl-0:0.21.5-5. 100% |  75.7 MiB/s |  77.5 KiB |  00m00s
+[ 73/151] Installing p11-kit-trust-0:0. 100% |  21.9 MiB/s | 448.3 KiB |  00m00s
+[ 74/151] Installing openssl-libs-1:3.2 100% | 391.2 MiB/s |   7.8 MiB |  00m00s
+[ 75/151] Installing coreutils-0:9.6-6. 100% | 170.4 MiB/s |   5.5 MiB |  00m00s
+[ 76/151] Installing ca-certificates-0: 100% |   2.0 MiB/s |   2.5 MiB |  00m01s
+[ 77/151] Installing gzip-0:1.13-3.fc42 100% |  27.8 MiB/s | 398.4 KiB |  00m00s
+[ 78/151] Installing rpm-sequoia-0:1.7. 100% | 402.4 MiB/s |   2.4 MiB |  00m00s
+[ 79/151] Installing libevent-0:2.1.12- 100% | 295.2 MiB/s | 906.9 KiB |  00m00s
+[ 80/151] Installing util-linux-core-0: 100% |  79.2 MiB/s |   1.4 MiB |  00m00s
+[ 81/151] Installing tar-2:1.35-5.fc42. 100% | 148.1 MiB/s |   3.0 MiB |  00m00s
+[ 82/151] Installing libsemanage-0:3.8. 100% | 149.5 MiB/s | 306.2 KiB |  00m00s
+[ 83/151] Installing shadow-utils-2:4.1 100% | 144.4 MiB/s |   4.0 MiB |  00m00s
+[ 84/151] Installing systemd-standalone 100% |  20.9 MiB/s | 277.8 KiB |  00m00s
+[ 85/151] Installing zstd-0:1.5.7-1.fc4 100% | 106.9 MiB/s |   1.7 MiB |  00m00s
+[ 86/151] Installing zip-0:3.0-43.fc42. 100% |  49.0 MiB/s | 702.4 KiB |  00m00s
+[ 87/151] Installing libfdisk-0:2.40.4- 100% | 364.7 MiB/s | 373.4 KiB |  00m00s
+[ 88/151] Installing libxml2-0:2.12.10- 100% |  99.8 MiB/s |   1.7 MiB |  00m00s
+[ 89/151] Installing libarchive-0:3.8.1 100% | 311.6 MiB/s | 957.1 KiB |  00m00s
+[ 90/151] Installing bzip2-0:1.0.8-20.f 100% |   8.5 MiB/s | 103.8 KiB |  00m00s
+[ 91/151] Installing add-determinism-0: 100% | 137.0 MiB/s |   2.5 MiB |  00m00s
+[ 92/151] Installing build-reproducibil 100% |   0.0   B/s |   1.0 KiB |  00m00s
+[ 93/151] Installing sqlite-libs-0:3.47 100% | 378.1 MiB/s |   1.5 MiB |  00m00s
+[ 94/151] Installing rpm-libs-0:4.20.1- 100% | 353.2 MiB/s | 723.4 KiB |  00m00s
+[ 95/151] Installing ed-0:1.21-2.fc42.x 100% |  11.2 MiB/s | 148.8 KiB |  00m00s
+[ 96/151] Installing patch-0:2.8-1.fc42 100% |  18.3 MiB/s | 224.3 KiB |  00m00s
+[ 97/151] Installing filesystem-srpm-ma 100% |   0.0   B/s |  38.9 KiB |  00m00s
+[ 98/151] Installing elfutils-default-y 100% | 340.5 KiB/s |   2.0 KiB |  00m00s
+[ 99/151] Installing elfutils-libs-0:0. 100% | 224.4 MiB/s | 689.3 KiB |  00m00s
+[100/151] Installing cpio-0:2.15-4.fc42 100% |  64.7 MiB/s |   1.1 MiB |  00m00s
+[101/151] Installing diffutils-0:3.12-1 100% |  91.8 MiB/s |   1.6 MiB |  00m00s
+[102/151] Installing json-c-0:0.18-2.fc 100% |  85.9 MiB/s |  88.0 KiB |  00m00s
+[103/151] Installing libgomp-0:15.2.1-5 100% | 265.0 MiB/s | 542.8 KiB |  00m00s
+[104/151] Installing rpm-build-libs-0:4 100% | 202.5 MiB/s | 207.4 KiB |  00m00s
+[105/151] Installing jansson-0:2.14-2.f 100% |  92.2 MiB/s |  94.4 KiB |  00m00s
+[106/151] Installing libpkgconf-0:2.3.0 100% |  77.4 MiB/s |  79.2 KiB |  00m00s
+[107/151] Installing pkgconf-0:2.3.0-2. 100% |   6.8 MiB/s |  91.0 KiB |  00m00s
+[108/151] Installing pkgconf-pkg-config 100% | 147.8 KiB/s |   1.8 KiB |  00m00s
+[109/151] Installing xxhash-libs-0:0.8. 100% |  89.4 MiB/s |  91.6 KiB |  00m00s
+[110/151] Installing libnghttp2-0:1.64. 100% | 167.5 MiB/s | 171.5 KiB |  00m00s
+[111/151] Installing keyutils-libs-0:1. 100% |   0.0   B/s |  59.7 KiB |  00m00s
+[112/151] Installing libcom_err-0:1.47. 100% |   0.0   B/s |  68.2 KiB |  00m00s
+[113/151] Installing libverto-0:0.3.2-1 100% |  26.6 MiB/s |  27.2 KiB |  00m00s
+[114/151] Installing krb5-libs-0:1.21.3 100% | 327.4 MiB/s |   2.3 MiB |  00m00s
+[115/151] Installing libssh-0:0.11.3-1. 100% | 277.9 MiB/s | 569.2 KiB |  00m00s
+[116/151] Installing libbrotli-0:1.2.0- 100% | 282.4 MiB/s | 867.7 KiB |  00m00s
+[117/151] Installing libtool-ltdl-0:2.5 100% |   0.0   B/s |  71.2 KiB |  00m00s
+[118/151] Installing gdbm-libs-1:1.23-9 100% | 128.5 MiB/s | 131.6 KiB |  00m00s
+[119/151] Installing cyrus-sasl-lib-0:2 100% | 135.5 MiB/s |   2.3 MiB |  00m00s
+[120/151] Installing openldap-0:2.6.10- 100% | 322.1 MiB/s | 659.6 KiB |  00m00s
+[121/151] Installing libcurl-0:8.11.1-6 100% | 271.9 MiB/s | 835.2 KiB |  00m00s
+[122/151] Installing elfutils-debuginfo 100% |   7.0 MiB/s |  86.2 KiB |  00m00s
+[123/151] Installing elfutils-0:0.194-1 100% | 154.2 MiB/s |   2.9 MiB |  00m00s
+[124/151] Installing binutils-0:2.44-12 100% | 331.3 MiB/s |  25.8 MiB |  00m00s
+[125/151] Installing gdb-minimal-0:16.3 100% | 288.0 MiB/s |  13.2 MiB |  00m00s
+[126/151] Installing debugedit-0:5.1-7. 100% |  14.7 MiB/s | 195.4 KiB |  00m00s
+[127/151] Installing curl-0:8.11.1-6.fc 100% |  19.2 MiB/s | 453.1 KiB |  00m00s
+[128/151] Installing rpm-0:4.20.1-1.fc4 100% |  92.5 MiB/s |   2.5 MiB |  00m00s
+[129/151] Installing lua-srpm-macros-0: 100% |   0.0   B/s |   1.9 KiB |  00m00s
+[130/151] Installing tree-sitter-srpm-m 100% |   0.0   B/s |   7.4 KiB |  00m00s
+[131/151] Installing zig-srpm-macros-0: 100% |   0.0   B/s |   1.7 KiB |  00m00s
+[132/151] Installing efi-srpm-macros-0: 100% |   0.0   B/s |  41.1 KiB |  00m00s
+[133/151] Installing perl-srpm-macros-0 100% |   0.0   B/s |   1.1 KiB |  00m00s
+[134/151] Installing package-notes-srpm 100% |   0.0   B/s |   2.0 KiB |  00m00s
+[135/151] Installing openblas-srpm-macr 100% |   0.0   B/s | 392.0   B |  00m00s
+[136/151] Installing ocaml-srpm-macros- 100% |   0.0   B/s |   2.2 KiB |  00m00s
+[137/151] Installing kernel-srpm-macros 100% |   0.0   B/s |   2.3 KiB |  00m00s
+[138/151] Installing gnat-srpm-macros-0 100% |   0.0   B/s |   1.3 KiB |  00m00s
+[139/151] Installing ghc-srpm-macros-0: 100% |   0.0   B/s |   1.0 KiB |  00m00s
+[140/151] Installing fpc-srpm-macros-0: 100% |   0.0   B/s | 420.0   B |  00m00s
+[141/151] Installing ansible-srpm-macro 100% |   0.0   B/s |  36.2 KiB |  00m00s
+[142/151] Installing forge-srpm-macros- 100% |   0.0   B/s |  40.3 KiB |  00m00s
+[143/151] Installing fonts-srpm-macros- 100% |  55.7 MiB/s |  57.0 KiB |  00m00s
+[144/151] Installing go-srpm-macros-0:3 100% |  61.6 MiB/s |  63.0 KiB |  00m00s
+[145/151] Installing python-srpm-macros 100% |  50.9 MiB/s |  52.2 KiB |  00m00s
+[146/151] Installing redhat-rpm-config- 100% |  93.9 MiB/s | 192.2 KiB |  00m00s
+[147/151] Installing rpm-build-0:4.20.1 100% |  12.4 MiB/s | 177.4 KiB |  00m00s
+[148/151] Installing pyproject-srpm-mac 100% |   2.4 MiB/s |   2.5 KiB |  00m00s
+[149/151] Installing util-linux-0:2.40. 100% |  96.3 MiB/s |   3.5 MiB |  00m00s
+[150/151] Installing which-0:2.23-2.fc4 100% |   6.4 MiB/s |  85.7 KiB |  00m00s
+[151/151] Installing info-0:7.2-3.fc42. 100% | 224.2 KiB/s | 358.3 KiB |  00m02s
+Complete!
+Finish: installing minimal buildroot with dnf5
+Start: creating root cache
+Finish: creating root cache
+Finish: chroot init
+INFO: Installed packages:
+INFO: add-determinism-0.6.0-1.fc42.x86_64
+alternatives-1.33-3.fc42.x86_64
+ansible-srpm-macros-1-17.1.fc42.noarch
+audit-libs-4.1.2-2.fc42.x86_64
+basesystem-11-22.fc42.noarch
+bash-5.2.37-1.fc42.x86_64
+binutils-2.44-12.fc42.x86_64
+build-reproducibility-srpm-macros-0.6.0-1.fc42.noarch
+bzip2-1.0.8-20.fc42.x86_64
+bzip2-libs-1.0.8-20.fc42.x86_64
+ca-certificates-2025.2.80_v9.0.304-1.0.fc42.noarch
+coreutils-9.6-6.fc42.x86_64
+coreutils-common-9.6-6.fc42.x86_64
+cpio-2.15-4.fc42.x86_64
+crypto-policies-20251125-1.git3839d0e.fc42.noarch
+curl-8.11.1-6.fc42.x86_64
+cyrus-sasl-lib-2.1.28-30.fc42.x86_64
+debugedit-5.1-7.fc42.x86_64
+diffutils-3.12-1.fc42.x86_64
+dwz-0.16-1.fc42.x86_64
+ed-1.21-2.fc42.x86_64
+efi-srpm-macros-6-3.fc42.noarch
+elfutils-0.194-1.fc42.x86_64
+elfutils-debuginfod-client-0.194-1.fc42.x86_64
+elfutils-default-yama-scope-0.194-1.fc42.noarch
+elfutils-libelf-0.194-1.fc42.x86_64
+elfutils-libs-0.194-1.fc42.x86_64
+fedora-gpg-keys-42-1.noarch
+fedora-release-42-30.noarch
+fedora-release-common-42-30.noarch
+fedora-release-identity-basic-42-30.noarch
+fedora-repos-42-1.noarch
+file-5.46-3.fc42.x86_64
+file-libs-5.46-3.fc42.x86_64
+filesystem-3.18-47.fc42.x86_64
+filesystem-srpm-macros-3.18-47.fc42.noarch
+findutils-4.10.0-5.fc42.x86_64
+fonts-srpm-macros-2.0.5-22.fc42.noarch
+forge-srpm-macros-0.4.0-2.fc42.noarch
+fpc-srpm-macros-1.3-14.fc42.noarch
+gawk-5.3.1-1.fc42.x86_64
+gdb-minimal-16.3-1.fc42.x86_64
+gdbm-libs-1.23-9.fc42.x86_64
+ghc-srpm-macros-1.9.2-2.fc42.noarch
+glibc-2.41-12.fc42.x86_64
+glibc-common-2.41-12.fc42.x86_64
+glibc-gconv-extra-2.41-12.fc42.x86_64
+glibc-minimal-langpack-2.41-12.fc42.x86_64
+gmp-6.3.0-4.fc42.x86_64
+gnat-srpm-macros-6-7.fc42.noarch
+gnulib-l10n-20241231-1.fc42.noarch
+go-srpm-macros-3.8.0-1.fc42.noarch
+gpg-pubkey-105ef944-65ca83d1
+grep-3.11-10.fc42.x86_64
+gzip-1.13-3.fc42.x86_64
+info-7.2-3.fc42.x86_64
+jansson-2.14-2.fc42.x86_64
+json-c-0.18-2.fc42.x86_64
+kernel-srpm-macros-1.0-25.fc42.noarch
+keyutils-libs-1.6.3-5.fc42.x86_64
+krb5-libs-1.21.3-6.fc42.x86_64
+libacl-2.3.2-3.fc42.x86_64
+libarchive-3.8.1-1.fc42.x86_64
+libattr-2.5.2-5.fc42.x86_64
+libblkid-2.40.4-8.fc42.x86_64
+libbrotli-1.2.0-1.fc42.x86_64
+libcap-2.73-2.fc42.x86_64
+libcap-ng-0.8.5-4.fc42.x86_64
+libcom_err-1.47.2-3.fc42.x86_64
+libcurl-8.11.1-6.fc42.x86_64
+libeconf-0.7.6-2.fc42.x86_64
+libevent-2.1.12-15.fc42.x86_64
+libfdisk-2.40.4-8.fc42.x86_64
+libffi-3.4.6-5.fc42.x86_64
+libgcc-15.2.1-5.fc42.x86_64
+libgomp-15.2.1-5.fc42.x86_64
+libidn2-2.3.8-1.fc42.x86_64
+libmount-2.40.4-8.fc42.x86_64
+libnghttp2-1.64.0-3.fc42.x86_64
+libpkgconf-2.3.0-2.fc42.x86_64
+libpsl-0.21.5-5.fc42.x86_64
+libselinux-3.8-3.fc42.x86_64
+libsemanage-3.8.1-2.fc42.x86_64
+libsepol-3.8-1.fc42.x86_64
+libsmartcols-2.40.4-8.fc42.x86_64
+libssh-0.11.3-1.fc42.x86_64
+libssh-config-0.11.3-1.fc42.noarch
+libstdc++-15.2.1-5.fc42.x86_64
+libtasn1-4.20.0-1.fc42.x86_64
+libtool-ltdl-2.5.4-4.fc42.x86_64
+libunistring-1.1-9.fc42.x86_64
+libuuid-2.40.4-8.fc42.x86_64
+libverto-0.3.2-10.fc42.x86_64
+libxcrypt-4.5.2-1.fc42.x86_64
+libxml2-2.12.10-1.fc42.x86_64
+libzstd-1.5.7-1.fc42.x86_64
+lua-libs-5.4.8-4.fc42.x86_64
+lua-srpm-macros-1-15.fc42.noarch
+lz4-libs-1.10.0-2.fc42.x86_64
+mpfr-4.2.2-1.fc42.x86_64
+ncurses-base-6.5-5.20250125.fc42.noarch
+ncurses-libs-6.5-5.20250125.fc42.x86_64
+ocaml-srpm-macros-10-4.fc42.noarch
+openblas-srpm-macros-2-19.fc42.noarch
+openldap-2.6.10-1.fc42.x86_64
+openssl-libs-3.2.6-2.fc42.x86_64
+p11-kit-0.25.8-1.fc42.x86_64
+p11-kit-trust-0.25.8-1.fc42.x86_64
+package-notes-srpm-macros-0.5-13.fc42.noarch
+pam-libs-1.7.0-6.fc42.x86_64
+patch-2.8-1.fc42.x86_64
+pcre2-10.46-1.fc42.x86_64
+pcre2-syntax-10.46-1.fc42.noarch
+perl-srpm-macros-1-57.fc42.noarch
+pkgconf-2.3.0-2.fc42.x86_64
+pkgconf-m4-2.3.0-2.fc42.noarch
+pkgconf-pkg-config-2.3.0-2.fc42.x86_64
+popt-1.19-8.fc42.x86_64
+publicsuffix-list-dafsa-20250616-1.fc42.noarch
+pyproject-srpm-macros-1.18.6-1.fc42.noarch
+python-srpm-macros-3.13-5.fc42.noarch
+qt5-srpm-macros-5.15.18-1.fc42.noarch
+qt6-srpm-macros-6.9.3-1.fc42.noarch
+readline-8.2-13.fc42.x86_64
+redhat-rpm-config-342-4.fc42.noarch
+rpm-4.20.1-1.fc42.x86_64
+rpm-build-4.20.1-1.fc42.x86_64
+rpm-build-libs-4.20.1-1.fc42.x86_64
+rpm-libs-4.20.1-1.fc42.x86_64
+rpm-sequoia-1.7.0-5.fc42.x86_64
+rust-srpm-macros-28.4-1.fc42.noarch
+sed-4.9-4.fc42.x86_64
+setup-2.15.0-13.fc42.noarch
+shadow-utils-4.17.4-1.fc42.x86_64
+sqlite-libs-3.47.2-5.fc42.x86_64
+systemd-libs-257.10-1.fc42.x86_64
+systemd-standalone-sysusers-257.10-1.fc42.x86_64
+tar-1.35-5.fc42.x86_64
+tree-sitter-srpm-macros-0.1.0-8.fc42.noarch
+unzip-6.0-66.fc42.x86_64
+util-linux-2.40.4-8.fc42.x86_64
+util-linux-core-2.40.4-8.fc42.x86_64
+which-2.23-2.fc42.x86_64
+xxhash-libs-0.8.3-2.fc42.x86_64
+xz-5.8.1-4.fc42.x86_64
+xz-libs-5.8.1-4.fc42.x86_64
+zig-srpm-macros-1-4.fc42.noarch
+zip-3.0-43.fc42.x86_64
+zlib-ng-compat-2.2.5-2.fc42.x86_64
+zstd-1.5.7-1.fc42.x86_64
+Start: buildsrpm
+Start: rpmbuild -bs
+Building target platforms: x86_64
+Building for target x86_64
+setting SOURCE_DATE_EPOCH=1767484800
+Wrote: /builddir/build/SRPMS/open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Finish: rpmbuild -bs
+INFO: chroot_scan: 1 files copied to /var/lib/copr-rpmbuild/results/chroot_scan
+INFO: /var/lib/mock/fedora-42-x86_64-1767623060.984856/root/var/log/dnf5.log
+INFO: chroot_scan: creating tarball /var/lib/copr-rpmbuild/results/chroot_scan.tar.gz
+/bin/tar: Removing leading `/' from member names
+Finish: buildsrpm
+INFO: Done(/var/lib/copr-rpmbuild/workspace/workdir-5qaa2da8/open-fprintd-eh575/open-fprintd-eh575.spec) Config(child) 0 minutes 20 seconds
+INFO: Results and/or logs in: /var/lib/copr-rpmbuild/results
+INFO: Cleaning up build root ('cleanup_on_success=True')
+Start: clean chroot
+INFO: unmounting tmpfs.
+Finish: clean chroot
+INFO: Start(/var/lib/copr-rpmbuild/results/open-fprintd-eh575-0.2.0-1.fc42.src.rpm)  Config(fedora-42-x86_64)
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/fedora-42-x86_64-bootstrap-1767623060.984856/root.
+INFO: reusing tmpfs at /var/lib/mock/fedora-42-x86_64-bootstrap-1767623060.984856/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/fedora-42-x86_64-1767623060.984856/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+Start: unpacking root cache
+Finish: unpacking root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Buildroot is handled by package management downloaded with a bootstrap image:
+  rpm-4.20.1-1.fc42.x86_64
+  rpm-sequoia-1.7.0-5.fc42.x86_64
+  dnf5-5.2.17.0-1.fc42.x86_64
+  dnf5-plugins-5.2.17.0-1.fc42.x86_64
+Finish: chroot init
+Start: build phase for open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Start: build setup for open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Building target platforms: x86_64
+Building for target x86_64
+setting SOURCE_DATE_EPOCH=1767484800
+Wrote: /builddir/build/SRPMS/open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Updating and loading repositories:
+ Copr repository                        100% | 100.8 KiB/s |   1.5 KiB |  00m00s
+ fedora                                 100% |  48.1 KiB/s |  30.5 KiB |  00m01s
+ updates                                100% |  28.5 KiB/s |   8.6 KiB |  00m00s
+Repositories loaded.
+Package                 Arch   Version        Repository      Size
+Installing:
+ python3-devel          x86_64 3.13.11-1.fc42 updates      1.8 MiB
+ python3-setuptools     noarch 74.1.3-7.fc42  updates      8.4 MiB
+ systemd-rpm-macros     noarch 257.10-1.fc42  updates     10.7 KiB
+Installing dependencies:
+ expat                  x86_64 2.7.3-1.fc42   updates    301.1 KiB
+ libb2                  x86_64 0.98.1-13.fc42 fedora      46.1 KiB
+ mpdecimal              x86_64 4.0.1-1.fc42   updates    217.2 KiB
+ pyproject-rpm-macros   noarch 1.18.6-1.fc42  updates    115.6 KiB
+ python-pip-wheel       noarch 24.3.1-5.fc42  updates      1.2 MiB
+ python-rpm-macros      noarch 3.13-5.fc42    updates     22.1 KiB
+ python3                x86_64 3.13.11-1.fc42 updates     28.7 KiB
+ python3-libs           x86_64 3.13.11-1.fc42 updates     40.1 MiB
+ python3-packaging      noarch 24.2-3.fc42    fedora     555.7 KiB
+ python3-rpm-generators noarch 14-12.fc42     fedora      81.7 KiB
+ python3-rpm-macros     noarch 3.13-5.fc42    updates      6.4 KiB
+ tzdata                 noarch 2025c-1.fc42   updates      1.6 MiB
+
+Transaction Summary:
+ Installing:        15 packages
+
+Total size of inbound packages is 14 MiB. Need to download 14 MiB.
+After this operation, 54 MiB extra will be used (install 54 MiB, remove 0 B).
+[ 1/15] systemd-rpm-macros-0:257.10-1.f 100% |   2.5 MiB/s |  33.0 KiB |  00m00s
+[ 2/15] python3-devel-0:3.13.11-1.fc42. 100% |  28.4 MiB/s | 407.7 KiB |  00m00s
+[ 3/15] libb2-0:0.98.1-13.fc42.x86_64   100% |  12.4 MiB/s |  25.4 KiB |  00m00s
+[ 4/15] python3-0:3.13.11-1.fc42.x86_64 100% |   5.9 MiB/s |  30.5 KiB |  00m00s
+[ 5/15] python3-setuptools-0:74.1.3-7.f 100% |  67.6 MiB/s |   2.0 MiB |  00m00s
+[ 6/15] python3-libs-0:3.13.11-1.fc42.x 100% | 328.8 MiB/s |   9.2 MiB |  00m00s
+[ 7/15] expat-0:2.7.3-1.fc42.x86_64     100% |   5.9 MiB/s | 119.9 KiB |  00m00s
+[ 8/15] mpdecimal-0:4.0.1-1.fc42.x86_64 100% |   7.3 MiB/s |  97.1 KiB |  00m00s
+[ 9/15] pyproject-rpm-macros-0:1.18.6-1 100% |  21.8 MiB/s |  44.6 KiB |  00m00s
+[10/15] python-pip-wheel-0:24.3.1-5.fc4 100% | 200.5 MiB/s |   1.2 MiB |  00m00s
+[11/15] tzdata-0:2025c-1.fc42.noarch    100% |  99.6 MiB/s | 713.7 KiB |  00m00s
+[12/15] python-rpm-macros-0:3.13-5.fc42 100% |   4.0 MiB/s |  16.4 KiB |  00m00s
+[13/15] python3-rpm-generators-0:14-12. 100% |   9.5 MiB/s |  29.2 KiB |  00m00s
+[14/15] python3-rpm-macros-0:3.13-5.fc4 100% |  10.9 MiB/s |  11.2 KiB |  00m00s
+[15/15] python3-packaging-0:24.2-3.fc42 100% |  50.1 MiB/s | 154.0 KiB |  00m00s
+--------------------------------------------------------------------------------
+[15/15] Total                           100% | 250.3 MiB/s |  14.0 MiB |  00m00s
+Running transaction
+[ 1/17] Verify package files            100% | 365.0   B/s |  15.0   B |  00m00s
+[ 2/17] Prepare transaction             100% | 576.0   B/s |  15.0   B |  00m00s
+[ 3/17] Installing python-rpm-macros-0: 100% |   0.0   B/s |  22.8 KiB |  00m00s
+[ 4/17] Installing python3-rpm-macros-0 100% |   0.0   B/s |   6.7 KiB |  00m00s
+[ 5/17] Installing pyproject-rpm-macros 100% |  28.7 MiB/s | 117.5 KiB |  00m00s
+[ 6/17] Installing tzdata-0:2025c-1.fc4 100% |  65.3 MiB/s |   1.9 MiB |  00m00s
+[ 7/17] Installing python-pip-wheel-0:2 100% | 622.2 MiB/s |   1.2 MiB |  00m00s
+[ 8/17] Installing mpdecimal-0:4.0.1-1. 100% | 213.7 MiB/s | 218.8 KiB |  00m00s
+[ 9/17] Installing expat-0:2.7.3-1.fc42 100% |  21.1 MiB/s | 303.2 KiB |  00m00s
+[10/17] Installing libb2-0:0.98.1-13.fc 100% |  11.5 MiB/s |  47.2 KiB |  00m00s
+[11/17] Installing python3-libs-0:3.13. 100% | 346.1 MiB/s |  40.5 MiB |  00m00s
+[12/17] Installing python3-0:3.13.11-1. 100% |   2.1 MiB/s |  30.5 KiB |  00m00s
+[13/17] Installing python3-packaging-0: 100% | 184.9 MiB/s | 568.0 KiB |  00m00s
+[14/17] Installing python3-rpm-generato 100% |  81.0 MiB/s |  82.9 KiB |  00m00s
+[15/17] Installing python3-devel-0:3.13 100% |  83.3 MiB/s |   1.8 MiB |  00m00s
+[16/17] Installing python3-setuptools-0 100% | 251.8 MiB/s |   8.6 MiB |  00m00s
+[17/17] Installing systemd-rpm-macros-0 100% | 592.3 KiB/s |  11.3 KiB |  00m00s
+Complete!
+Building target platforms: x86_64
+Building for target x86_64
+setting SOURCE_DATE_EPOCH=1767484800
+Wrote: /builddir/build/SRPMS/open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Updating and loading repositories:
+ Copr repository                        100% | 108.0 KiB/s |   1.5 KiB |  00m00s
+ fedora                                 100% |  47.1 KiB/s |  30.5 KiB |  00m01s
+ updates                                100% |  24.1 KiB/s |   8.6 KiB |  00m00s
+Repositories loaded.
+Nothing to do.
+Package "python3-devel-3.13.11-1.fc42.x86_64" is already installed.
+Package "python3-setuptools-74.1.3-7.fc42.noarch" is already installed.
+Package "systemd-rpm-macros-257.10-1.fc42.noarch" is already installed.
+
+Finish: build setup for open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Start: rpmbuild open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Building target platforms: x86_64
+Building for target x86_64
+setting SOURCE_DATE_EPOCH=1767484800
+Executing(%mkbuilddir): /bin/sh -e /var/tmp/rpm-tmp.xNd8q4
+Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.wlWYJD
++ umask 022
++ cd /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build
++ cd /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build
++ rm -rf open-fprintd-eh575-0.2.0
++ /usr/lib/rpm/rpmuncompress -x /builddir/build/SOURCES/open-fprintd-eh575-0.2.0.tar.gz
++ STATUS=0
++ '[' 0 -ne 0 ']'
++ cd open-fprintd-eh575-0.2.0
++ /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.VPLBpc
++ umask 022
++ cd /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build
++ CFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer '
++ export CFLAGS
++ CXXFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer '
++ export CXXFLAGS
++ FFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -I/usr/lib64/gfortran/modules '
++ export FFLAGS
++ FCFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -I/usr/lib64/gfortran/modules '
++ export FCFLAGS
++ VALAFLAGS=-g
++ export VALAFLAGS
++ RUSTFLAGS='-Copt-level=3 -Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes -Clink-arg=-specs=/usr/lib/rpm/redhat/redhat-package-notes --cap-lints=warn'
++ export RUSTFLAGS
++ LDFLAGS='-Wl,-z,relro -Wl,--as-needed  -Wl,-z,pack-relative-relocs -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -Wl,--build-id=sha1 -specs=/usr/lib/rpm/redhat/redhat-package-notes '
++ export LDFLAGS
++ LT_SYS_LIBRARY_PATH=/usr/lib64:
++ export LT_SYS_LIBRARY_PATH
++ CC=gcc
++ export CC
++ CXX=g++
++ export CXX
++ cd open-fprintd-eh575-0.2.0
++ CFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer '
++ LDFLAGS='-Wl,-z,relro -Wl,--as-needed  -Wl,-z,pack-relative-relocs -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -Wl,--build-id=sha1 -specs=/usr/lib/rpm/redhat/redhat-package-notes '
++ /usr/bin/python3 setup.py build '--executable=/usr/bin/python3 -sP'
+running build
+running build_py
+creating build
+creating build/lib
+creating build/lib/egis_driver
+copying egis_driver/__init__.py -> build/lib/egis_driver
+copying egis_driver/fingerprint_matcher.py -> build/lib/egis_driver
+copying egis_driver/egis_driver.py -> build/lib/egis_driver
+creating build/lib/openfprintd
+copying openfprintd/polkit.py -> build/lib/openfprintd
+copying openfprintd/manager.py -> build/lib/openfprintd
+copying openfprintd/egis_config.py -> build/lib/openfprintd
+copying openfprintd/device.py -> build/lib/openfprintd
+copying openfprintd/__init__.py -> build/lib/openfprintd
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.chOaQ9
++ umask 022
++ cd /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build
++ '[' /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT '!=' / ']'
++ rm -rf /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT
+++ dirname /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT
++ mkdir -p /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build
++ mkdir /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT
++ CFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer '
++ export CFLAGS
++ CXXFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer '
++ export CXXFLAGS
++ FFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -I/usr/lib64/gfortran/modules '
++ export FFLAGS
++ FCFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -I/usr/lib64/gfortran/modules '
++ export FCFLAGS
++ VALAFLAGS=-g
++ export VALAFLAGS
++ RUSTFLAGS='-Copt-level=3 -Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes -Clink-arg=-specs=/usr/lib/rpm/redhat/redhat-package-notes --cap-lints=warn'
++ export RUSTFLAGS
++ LDFLAGS='-Wl,-z,relro -Wl,--as-needed  -Wl,-z,pack-relative-relocs -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -Wl,--build-id=sha1 -specs=/usr/lib/rpm/redhat/redhat-package-notes '
++ export LDFLAGS
++ LT_SYS_LIBRARY_PATH=/usr/lib64:
++ export LT_SYS_LIBRARY_PATH
++ CC=gcc
++ export CC
++ CXX=g++
++ export CXX
++ cd open-fprintd-eh575-0.2.0
++ CFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -mtls-dialect=gnu2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer '
++ LDFLAGS='-Wl,-z,relro -Wl,--as-needed  -Wl,-z,pack-relative-relocs -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -Wl,--build-id=sha1 -specs=/usr/lib/rpm/redhat/redhat-package-notes '
++ /usr/bin/python3 setup.py install -O1 --skip-build --root /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT --prefix /usr
+running install
+/usr/lib/python3.13/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+!!
+
+        ********************************************************************************
+        Please avoid running ``setup.py`` directly.
+        Instead, use pypa/build, pypa/installer or other
+        standards-based tools.
+
+        Follow the current Python packaging guidelines when building
+        Python RPM packages.
+
+        See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html
+        and https://docs.fedoraproject.org/en-US/packaging-guidelines/Python/ for details.
+        ********************************************************************************
+
+!!
+  self.initialize_options()
+running install_lib
+creating /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr
+creating /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib
+creating /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13
+creating /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages
+creating /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd
+copying build/lib/openfprintd/__init__.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd
+copying build/lib/openfprintd/device.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd
+copying build/lib/openfprintd/egis_config.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd
+copying build/lib/openfprintd/manager.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd
+copying build/lib/openfprintd/polkit.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd
+creating /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver
+copying build/lib/egis_driver/egis_driver.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver
+copying build/lib/egis_driver/fingerprint_matcher.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver
+copying build/lib/egis_driver/__init__.py -> /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd/__init__.py to __init__.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd/device.py to device.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd/egis_config.py to egis_config.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd/manager.py to manager.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/openfprintd/polkit.py to polkit.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver/egis_driver.py to egis_driver.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver/fingerprint_matcher.py to fingerprint_matcher.cpython-313.pyc
+byte-compiling /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/egis_driver/__init__.py to __init__.cpython-313.pyc
+writing byte-compilation script '/tmp/tmpnufgvrh1.py'
+/usr/bin/python3 /tmp/tmpnufgvrh1.py
+removing /tmp/tmpnufgvrh1.py
+running install_egg_info
+running egg_info
+creating open_fprintd_eh575.egg-info
+writing open_fprintd_eh575.egg-info/PKG-INFO
+writing dependency_links to open_fprintd_eh575.egg-info/dependency_links.txt
+writing requirements to open_fprintd_eh575.egg-info/requires.txt
+writing top-level names to open_fprintd_eh575.egg-info/top_level.txt
+writing manifest file 'open_fprintd_eh575.egg-info/SOURCES.txt'
+reading manifest file 'open_fprintd_eh575.egg-info/SOURCES.txt'
+writing manifest file 'open_fprintd_eh575.egg-info/SOURCES.txt'
+Copying open_fprintd_eh575.egg-info to /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/python3.13/site-packages/open_fprintd_eh575-0.1.0-py3.13.egg-info
+running install_scripts
++ rm -rfv /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/bin/__pycache__
++ install -d /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/bin
++ install -m 0755 bin/open-fprintd /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/bin/
++ install -m 0755 bin/egis-bridge /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/bin/
++ install -d /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/systemd/system
++ install -m 0644 open-fprintd.service /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/systemd/system/
++ install -m 0644 egis-bridge.service /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/systemd/system/
++ install -d /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/share/polkit-1/actions
++ install -m 0644 net.reactivated.fprint.policy /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/share/polkit-1/actions/
++ install -d /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/var/lib/open-fprintd/egis
++ install -d /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/udev/rules.d
++ install -m 0644 70-egis-eh575.rules /builddir/build/BUILD/open-fprintd-eh575-0.2.0-build/BUILDROOT/usr/lib/udev/rules.d/
+install: cannot stat '70-egis-eh575.rules': No such file or directory
+error: Bad exit status from /var/tmp/rpm-tmp.chOaQ9 (%install)
+
+RPM build errors:
+    Bad exit status from /var/tmp/rpm-tmp.chOaQ9 (%install)
+Finish: rpmbuild open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+Finish: build phase for open-fprintd-eh575-0.2.0-1.fc42.src.rpm
+INFO: chroot_scan: 1 files copied to /var/lib/copr-rpmbuild/results/chroot_scan
+INFO: /var/lib/mock/fedora-42-x86_64-1767623060.984856/root/var/log/dnf5.log
+INFO: chroot_scan: creating tarball /var/lib/copr-rpmbuild/results/chroot_scan.tar.gz
+/bin/tar: Removing leading `/' from member names
+ERROR: Exception(/var/lib/copr-rpmbuild/results/open-fprintd-eh575-0.2.0-1.fc42.src.rpm) Config(fedora-42-x86_64) 0 minutes 6 seconds
+INFO: Results and/or logs in: /var/lib/copr-rpmbuild/results
+INFO: Cleaning up build root ('cleanup_on_failure=True')
+Start: clean chroot
+INFO: unmounting tmpfs.
+Finish: clean chroot
+ERROR: Command failed: 
+ # /usr/bin/systemd-nspawn -q -M 7b21bb3acf314760be5abf2264241253 -D /var/lib/mock/fedora-42-x86_64-1767623060.984856/root -a -u mockbuild --capability=cap_ipc_lock --capability=cap_ipc_lock --bind=/tmp/mock-resolv._modsxil:/etc/resolv.conf --bind=/dev/btrfs-control --bind=/dev/mapper/control --bind=/dev/fuse --bind=/dev/loop-control --bind=/dev/loop0 --bind=/dev/loop1 --bind=/dev/loop2 --bind=/dev/loop3 --bind=/dev/loop4 --bind=/dev/loop5 --bind=/dev/loop6 --bind=/dev/loop7 --bind=/dev/loop8 --bind=/dev/loop9 --bind=/dev/loop10 --bind=/dev/loop11 --console=pipe --setenv=TERM=vt100 --setenv=SHELL=/bin/bash --setenv=HOME=/builddir --setenv=HOSTNAME=mock --setenv=PATH=/usr/bin:/bin:/usr/sbin:/sbin '--setenv=PROMPT_COMMAND=printf "\033]0;<mock-chroot>\007"' '--setenv=PS1=<mock-chroot> \s-\v\$ ' --setenv=LANG=C.UTF-8 --resolv-conf=off bash --login -c '/usr/bin/rpmbuild -bb  --target x86_64 --nodeps /builddir/build/originals/open-fprintd-eh575.spec'
+
+Copr build error: Build failed

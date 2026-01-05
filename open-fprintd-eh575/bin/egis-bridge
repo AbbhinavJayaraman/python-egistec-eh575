@@ -10,8 +10,9 @@ import threading
 # Import from the specific packages we created
 from egis_driver import egis_driver
 from egis_driver import fingerprint_matcher
-# Import config from the openfprintd package (Shared Config)
-from openfprintd import egis_config 
+
+# FIX: Removed broken import 'from openfprintd import egis_config'
+# We define the constants locally to avoid conflicts with the main open-fprintd package.
 
 # --- Configuration ---
 DEVICE_IFACE = 'io.github.uunicorn.Fprint.Device'
@@ -19,9 +20,12 @@ MANAGER_IFACE = 'net.reactivated.Fprint.Manager'
 MANAGER_OBJ = '/net/reactivated/Fprint/Manager'
 MANAGER_BUS = 'net.reactivated.Fprint'
 
-# --- CHANGED PATH ---
 # Must be absolute because we are a system service now
 ENROLL_DIR = "/var/lib/open-fprintd/egis"
+
+# Config constants (formerly in egis_config.py)
+ENROLL_STAGES = 15
+MATCH_THRESHOLD = 15
 
 class EgisBridge(dbus.service.Object):
     def __init__(self, bus):
@@ -161,13 +165,11 @@ class EgisBridge(dbus.service.Object):
         self.enroll_scans.append(img)
         count = len(self.enroll_scans)
         
-        try: target = egis_config.ENROLL_STAGES
-        except: target = 15
+        target = ENROLL_STAGES
 
         print(f"[BRIDGE] Enroll Progress: {count}/{target}")
 
         if count < target:
-            # THREAD SAFETY FIX: Send signal from main loop
             GLib.idle_add(self.EnrollStatus, "enroll-stage-passed", False)
         else:
             unique_name = f"{username}_{finger_name}"
@@ -176,11 +178,9 @@ class EgisBridge(dbus.service.Object):
             
             if success:
                 print("[BRIDGE] Enrollment Successful!")
-                # THREAD SAFETY FIX
                 GLib.idle_add(self.EnrollStatus, "enroll-completed", True)
             else:
                 print("[BRIDGE] Enrollment Failed")
-                # THREAD SAFETY FIX
                 GLib.idle_add(self.EnrollStatus, "enroll-failed", True)
                 
             self.scanning = False
@@ -188,23 +188,19 @@ class EgisBridge(dbus.service.Object):
     def _handle_verify(self, img, username):
         match_name, score = self.matcher.verify_finger(img)
         
-        try: min_score = egis_config.MATCH_THRESHOLD
-        except: min_score = 15
+        min_score = MATCH_THRESHOLD
 
         if match_name and score >= min_score:
             print(f"[BRIDGE] Best Match: {match_name} (Score: {score})")
             if match_name.startswith(username + "_"):
                 print("[BRIDGE] AUTHENTICATED!")
-                # THREAD SAFETY FIX
                 GLib.idle_add(self.VerifyStatus, "verify-match", True)
                 self.scanning = False
             else:
                 print(f"[BRIDGE] Wrong user! ({match_name})")
-                # THREAD SAFETY FIX
                 GLib.idle_add(self.VerifyStatus, "verify-no-match", False)
         else:
             print(f"[BRIDGE] Rejected. (Score: {score}/{min_score})")
-            # Use 'verify-retry-scan' to suppress GDM 'Unknown Error' messages
             GLib.idle_add(self.VerifyStatus, "verify-retry-scan", False)
 
     # --- Signals ---

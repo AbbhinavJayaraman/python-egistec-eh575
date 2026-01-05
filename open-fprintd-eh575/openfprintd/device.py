@@ -4,10 +4,10 @@ import logging
 import pwd
 import threading
 from gi.repository import GLib
-import egis_config 
 import openfprintd.polkit as polkit
 
 INTERFACE_NAME = 'net.reactivated.Fprint.Device'
+ENROLL_STAGES = 15
 
 class AlreadyInUse(dbus.DBusException):
     _dbus_error_name = 'net.reactivated.Fprint.Error.AlreadyInUse'
@@ -35,7 +35,7 @@ class Device(dbus.service.Object):
         self.bus = bus_name.get_bus()
         self.target_props = dbus.Dictionary({ 
                 'name':  'DBus driver', 
-                'num-enroll-stages': egis_config.ENROLL_STAGES,
+                'num-enroll-stages': ENROLL_STAGES,
                 'scan-type': 'press'
             })
         self.owner_watcher = None

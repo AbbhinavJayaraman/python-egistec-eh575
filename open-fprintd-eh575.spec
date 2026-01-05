@@ -1,5 +1,5 @@
 Name:           open-fprintd-eh575
-Version:        0.1.0
+Version:        0.2.3
 Release:        1%{?dist}
 Summary:        Egis EH575 Fingerprint Driver and Open Fprintd Manager
 
@@ -52,6 +52,10 @@ install -m 0644 net.reactivated.fprint.policy %{buildroot}%{_datadir}/polkit-1/a
 # 5. Create State Directory for Fingerprints
 install -d %{buildroot}%{_sharedstatedir}/open-fprintd/egis
 
+# 6. Install Udev Rule
+install -d %{buildroot}%{_udevrulesdir}
+install -m 0644 70-egis-eh575.rules %{buildroot}%{_udevrulesdir}/
+
 %post
 %systemd_post open-fprintd.service egis-bridge.service
 
@@ -82,6 +86,9 @@ install -d %{buildroot}%{_sharedstatedir}/open-fprintd/egis
 # State Directory (Owned by the package)
 %dir %{_sharedstatedir}/open-fprintd
 %dir %{_sharedstatedir}/open-fprintd/egis
+
+# Udev
+%{_udevrulesdir}/70-egis-eh575.rules
 
 %changelog
 * Sun Jan 04 2026 Your Name <email@example.com> - 0.1.0-1

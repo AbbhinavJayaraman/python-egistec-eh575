@@ -4,11 +4,5 @@ setup(
     name="open-fprintd-eh575",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=[
-        "dbus-python",
-        "pygobject",
-        "numpy",
-        "opencv-python",
-        "pyusb",
-    ],
+    install_requires=[]
 )
