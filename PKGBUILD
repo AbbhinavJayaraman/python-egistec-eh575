@@ -8,7 +8,7 @@ url="https://github.com/abbhinavjayaraman/python-egistec-eh575"
 license=('MIT')
 depends=('python' 'python-dbus' 'python-gobject' 'python-numpy' 'python-opencv' 'python-pyusb' 'polkit')
 makedepends=('git' 'python-setuptools')
-source=("git+file://${PWD}")
+source=("git+https://github.com/abbhinavjayaraman/python-egistec-eh575.git")
 sha256sums=('SKIP')
 
 package() {
