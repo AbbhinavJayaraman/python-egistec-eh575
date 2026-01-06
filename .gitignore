@@ -1,1 +1,5 @@
 .egistec/*
+src/
+pkg/
+*.pkg.tar.zst
+*.pkg.tar.xz
