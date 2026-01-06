@@ -1,5 +1,6 @@
 .egistec/*
 src/
 pkg/
+python-egistec-eh575/
 *.pkg.tar.zst
 *.pkg.tar.xz
