@@ -74,7 +74,7 @@ class FingerprintMatcher:
                     best_match = name
 
         # Score Threshold (Adjust as needed)
-        if best_score > 10: 
+        if best_score > 8: 
             return best_match, best_score
         return None, 0
 
