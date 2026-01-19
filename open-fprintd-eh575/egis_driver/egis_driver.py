@@ -96,11 +96,14 @@ class EgisDriver:
         Returns: (image_data, contrast_value)
         If no data read (USB error), returns (None, 0.0)
         """
-        self._rearm()
-        self.dev.write(ENDPOINT_OUT, bytes.fromhex("45 47 49 53 64 14 ec"))
-        
+        # 1. We move the try block UP to cover the rearm and the write
         try:
+            self._rearm()
+            self.dev.write(ENDPOINT_OUT, bytes.fromhex("45 47 49 53 64 14 ec"))
+        
+            # 2. The read logic stays inside the try block
             data = self.dev.read(ENDPOINT_IN, 10000, timeout=1500)
+            
             # Drain pipe
             try: self.dev.read(ENDPOINT_IN, 512, timeout=20)
             except: pass
@@ -117,6 +120,7 @@ class EgisDriver:
                 return data, contrast
                 
         except usb.core.USBError:
+            # Now this catches connection drops during write OR read
             pass
             
         return None, 0.0
