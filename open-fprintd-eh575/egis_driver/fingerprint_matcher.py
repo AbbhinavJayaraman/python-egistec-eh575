@@ -24,23 +24,34 @@ class FingerprintMatcher:
     def enroll_finger(self, name, raw_frames):
         """Saves KeyPoints AND Descriptors to disk for geometric verification."""
         templates = []
-        for raw in raw_frames:
+        counts = []
+        
+        print(f"[MATCHER] Starting enrollment for {name} with {len(raw_frames)} raw scans...")
+
+        for i, raw in enumerate(raw_frames):
             img_arr = np.array(list(raw), dtype=np.uint8).reshape((50, 103))
             img = self._preprocess(img_arr)
             kp, des = self.sift.detectAndCompute(img, None)
             
+            # --- LOGGING ADDED HERE ---
+            num_features = len(kp)
+            counts.append(num_features)
+            print(f"[MATCHER] Frame {i+1}: Found {num_features} features")
+
             # We need at least a few points to make a valid template
-            if des is not None and len(kp) > 5:
-                # cv2.KeyPoint objects cannot be pickled directly by numpy safely.
-                # We unpack them into a simple tuple format: (x, y, size, angle, response, octave, class_id)
+            if des is not None and num_features > 5:
+                # Pack KeyPoints for saving
                 packed_kp = [(p.pt, p.size, p.angle, p.response, p.octave, p.class_id) for p in kp]
                 templates.append((packed_kp, des))
         
+        # --- SUMMARY STATS ---
+        if counts:
+            print(f"[MATCHER] STATS for {name}: MAX={max(counts)}, AVG={sum(counts)/len(counts):.1f}")
+
         if templates:
             safe_name = name.replace("/", "_") # Sanitize
-            # Save as object array to allow mixed types (list of tuples)
             np.save(os.path.join(self.enroll_dir, f"{safe_name}.npy"), np.array(templates, dtype=object))
-            print(f"[MATCHER] Enrolled: {safe_name} with {len(templates)} templates")
+            print(f"[MATCHER] Successfully saved {len(templates)} templates for {safe_name}")
             return True
         return False
 
@@ -94,7 +105,7 @@ class FingerprintMatcher:
 
                     # cv2.findHomography attempts to map points from Live -> Stored
                     # RANSAC discards points that don't fit the map (outliers)
-                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 2.0)
                     
                     if mask is not None:
                         # The score is the number of INLIERS (points that geometrically align)
@@ -106,7 +117,7 @@ class FingerprintMatcher:
         # Score Threshold
         # With RANSAC, a score of 8-10 means 8-10 points matched AND fit the same physical shape.
         # This is much harder to fake than 8 random points.
-        if best_score > 8: 
+        if best_score > 13: 
             return best_match, best_score
         return None, 0
 
