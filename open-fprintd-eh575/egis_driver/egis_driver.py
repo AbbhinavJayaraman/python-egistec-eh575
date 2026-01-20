@@ -119,10 +119,10 @@ class EgisDriver:
                 contrast = np.std(arr)
                 return data, contrast
                 
-        except usb.core.USBError:
-            # Now this catches connection drops during write OR read
+        except usb.core.USBError as e:
+            print(f"[DRIVER] USB Error: {e}")
             pass
-            
+
         return None, 0.0
 
     def check_sensor_clear(self):
