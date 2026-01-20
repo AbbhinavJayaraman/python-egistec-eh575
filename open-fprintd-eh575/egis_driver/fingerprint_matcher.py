@@ -105,7 +105,7 @@ class FingerprintMatcher:
 
                     # cv2.findHomography attempts to map points from Live -> Stored
                     # RANSAC discards points that don't fit the map (outliers)
-                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 2.0)
+                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 1.0)
                     
                     if mask is not None:
                         # The score is the number of INLIERS (points that geometrically align)
@@ -117,7 +117,7 @@ class FingerprintMatcher:
         # Score Threshold
         # With RANSAC, a score of 8-10 means 8-10 points matched AND fit the same physical shape.
         # This is much harder to fake than 8 random points.
-        if best_score > 13: 
+        if best_score > 25: 
             return best_match, best_score
         return None, 0
 
