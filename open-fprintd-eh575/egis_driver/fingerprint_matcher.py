@@ -22,30 +22,36 @@ class FingerprintMatcher:
         return img
 
     def enroll_finger(self, name, raw_frames):
-        """Saves sift descriptors to disk."""
-        descriptors_list = []
+        """Saves KeyPoints AND Descriptors to disk for geometric verification."""
+        templates = []
         for raw in raw_frames:
             img_arr = np.array(list(raw), dtype=np.uint8).reshape((50, 103))
             img = self._preprocess(img_arr)
             kp, des = self.sift.detectAndCompute(img, None)
-            if des is not None:
-                descriptors_list.append(des)
+            
+            # We need at least a few points to make a valid template
+            if des is not None and len(kp) > 5:
+                # cv2.KeyPoint objects cannot be pickled directly by numpy safely.
+                # We unpack them into a simple tuple format: (x, y, size, angle, response, octave, class_id)
+                packed_kp = [(p.pt, p.size, p.angle, p.response, p.octave, p.class_id) for p in kp]
+                templates.append((packed_kp, des))
         
-        if descriptors_list:
+        if templates:
             safe_name = name.replace("/", "_") # Sanitize
-            dtype_obj = np.array(descriptors_list, dtype=object)
-            np.save(os.path.join(self.enroll_dir, f"{safe_name}.npy"), dtype_obj)
-            print(f"[MATCHER] Enrolled: {safe_name}")
+            # Save as object array to allow mixed types (list of tuples)
+            np.save(os.path.join(self.enroll_dir, f"{safe_name}.npy"), np.array(templates, dtype=object))
+            print(f"[MATCHER] Enrolled: {safe_name} with {len(templates)} templates")
             return True
         return False
 
     def verify_finger(self, raw_frame):
-        """Returns (matched_name, score)"""
+        """Returns (matched_name, score) using RANSAC Geometric Verification"""
         img_arr = np.array(list(raw_frame), dtype=np.uint8).reshape((50, 103))
         img = self._preprocess(img_arr)
-        kp, des = self.sift.detectAndCompute(img, None)
+        kp_live, des_live = self.sift.detectAndCompute(img, None)
         
-        if des is None: return None, 0
+        # Need at least 4 points to calculate Homography (Geometry)
+        if des_live is None or len(kp_live) < 4: return None, 0
 
         best_score = 0
         best_match = None
@@ -58,23 +64,49 @@ class FingerprintMatcher:
                 enrolled_templates = np.load(os.path.join(self.enroll_dir, filename), allow_pickle=True)
             except: continue
             
-            for template_des in enrolled_templates:
-                if template_des is None or len(template_des) < 2: continue
+            for template_data in enrolled_templates:
+                # Sanity check: ensure we have both KeyPoints and Descriptors (Handles corrupt/old files)
+                if len(template_data) != 2: continue
+                
+                packed_kp_stored, des_stored = template_data
+                
+                # Reconstruct the KeyPoint objects from the saved tuples
+                kp_stored = [cv2.KeyPoint(x=pt[0], y=pt[1], size=sz, angle=ang, response=resp, octave=oct, class_id=cid) 
+                             for (pt, sz, ang, resp, oct, cid) in packed_kp_stored]
+
+                if des_stored is None or len(des_stored) < 2: continue
+                
+                # 1. Standard KNN Match (The "Bag of Features" check)
                 try:
-                    matches = self.matcher.knnMatch(des, template_des, k=2)
+                    matches = self.matcher.knnMatch(des_live, des_stored, k=2)
                 except: continue
                 
-                good_points = 0
+                good_matches = []
                 for m, n in matches:
                     if m.distance < 0.75 * n.distance:
-                        good_points += 1
-                
-                if good_points > best_score:
-                    best_score = good_points
-                    best_match = name
+                        good_matches.append(m)
 
-        # Score Threshold (Adjust as needed)
-        if best_score > 8: 
+                # 2. Geometric Verification (RANSAC)
+                # We strictly require 4+ matching points to define a valid geometric transformation
+                if len(good_matches) > 4:
+                    src_pts = np.float32([kp_live[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2)
+                    dst_pts = np.float32([kp_stored[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2)
+
+                    # cv2.findHomography attempts to map points from Live -> Stored
+                    # RANSAC discards points that don't fit the map (outliers)
+                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+                    
+                    if mask is not None:
+                        # The score is the number of INLIERS (points that geometrically align)
+                        inliers = np.sum(mask)
+                        if inliers > best_score:
+                            best_score = inliers
+                            best_match = name
+
+        # Score Threshold
+        # With RANSAC, a score of 8-10 means 8-10 points matched AND fit the same physical shape.
+        # This is much harder to fake than 8 random points.
+        if best_score > 9: 
             return best_match, best_score
         return None, 0
 
