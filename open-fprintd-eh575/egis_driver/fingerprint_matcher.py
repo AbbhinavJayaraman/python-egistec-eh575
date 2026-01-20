@@ -106,7 +106,7 @@ class FingerprintMatcher:
         # Score Threshold
         # With RANSAC, a score of 8-10 means 8-10 points matched AND fit the same physical shape.
         # This is much harder to fake than 8 random points.
-        if best_score > 9: 
+        if best_score > 8: 
             return best_match, best_score
         return None, 0
 

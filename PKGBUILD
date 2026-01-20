@@ -1,7 +1,7 @@
 # Maintainer: Jayabbhi <abbhinavjayaraman@gmail.com>
 pkgname=open-fprintd-eh575
 pkgver=0.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Egis EH575 Fingerprint Driver and Open Fprintd Manager (Isolated /opt Install)"
 arch=('any')
 url="https://github.com/abbhinavjayaraman/python-egistec-eh575"
