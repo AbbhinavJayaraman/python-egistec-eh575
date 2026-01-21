@@ -105,7 +105,7 @@ class FingerprintMatcher:
 
                     # cv2.findHomography attempts to map points from Live -> Stored
                     # RANSAC discards points that don't fit the map (outliers)
-                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 1.0)
+                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 1.5)
                     
                     if mask is not None:
                         # The score is the number of INLIERS (points that geometrically align)
