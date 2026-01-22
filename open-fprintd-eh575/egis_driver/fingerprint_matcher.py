@@ -56,68 +56,70 @@ class FingerprintMatcher:
         return False
 
     def verify_finger(self, raw_frame):
-        """Returns (matched_name, score) using RANSAC Geometric Verification"""
+        """
+        Uses Partial Affine Transform to find if a sub-region matches perfectly.
+        Robust to rotation and translation.
+        """
         img_arr = np.array(list(raw_frame), dtype=np.uint8).reshape((50, 103))
         img = self._preprocess(img_arr)
         kp_live, des_live = self.sift.detectAndCompute(img, None)
         
-        # Need at least 4 points to calculate Homography (Geometry)
         if des_live is None or len(kp_live) < 4: return None, 0
 
         best_score = 0
         best_match = None
 
+        # Iterate through the bank of templates
         for filename in os.listdir(self.enroll_dir):
             if not filename.endswith(".npy"): continue
             
             name = filename.replace(".npy", "")
             try:
-                enrolled_templates = np.load(os.path.join(self.enroll_dir, filename), allow_pickle=True)
+                # Load templates: List of (packed_kp, descriptors)
+                templates = np.load(os.path.join(self.enroll_dir, filename), allow_pickle=True)
             except: continue
             
-            for template_data in enrolled_templates:
-                # Sanity check: ensure we have both KeyPoints and Descriptors (Handles corrupt/old files)
-                if len(template_data) != 2: continue
+            for (packed_kp_stored, des_stored) in templates:
+                if des_stored is None or len(des_stored) < 3: continue
                 
-                packed_kp_stored, des_stored = template_data
-                
-                # Reconstruct the KeyPoint objects from the saved tuples
-                kp_stored = [cv2.KeyPoint(x=pt[0], y=pt[1], size=sz, angle=ang, response=resp, octave=oct, class_id=cid) 
-                             for (pt, sz, ang, resp, oct, cid) in packed_kp_stored]
-
-                if des_stored is None or len(des_stored) < 2: continue
-                
-                # 1. Standard KNN Match (The "Bag of Features" check)
+                # 1. Relaxed Feature Matching
                 try:
                     matches = self.matcher.knnMatch(des_live, des_stored, k=2)
                 except: continue
                 
                 good_matches = []
                 for m, n in matches:
-                    if m.distance < 0.75 * n.distance:
+                    # Looser ratio (0.85) allows for more partial matches
+                    if m.distance < 0.85 * n.distance:
                         good_matches.append(m)
 
-                # 2. Geometric Verification (RANSAC)
-                # We strictly require 4+ matching points to define a valid geometric transformation
-                if len(good_matches) > 4:
+                # We need fewer points for Affine (3 points defines a triangle)
+                if len(good_matches) >= 3:
                     src_pts = np.float32([kp_live[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2)
-                    dst_pts = np.float32([kp_stored[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2)
+                    # Unpack the stored keypoints (index 0 is the pt tuple)
+                    dst_pts = np.float32([packed_kp_stored[m.trainIdx][0] for m in good_matches]).reshape(-1, 1, 2)
 
-                    # cv2.findHomography attempts to map points from Live -> Stored
-                    # RANSAC discards points that don't fit the map (outliers)
-                    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 3.0)
+                    # --- THE MAGIC FIX ---
+                    # estimateAffinePartial2D finds the best [Rotation + Shift + Scale]
+                    # It does NOT allow perspective warping.
+                    # It returns a 2x3 matrix (M) and a mask of inliers.
+                    M, mask = cv2.estimateAffinePartial2D(src_pts, dst_pts, method=cv2.RANSAC, ransacReprojThreshold=5.0)
                     
                     if mask is not None:
-                        # The score is the number of INLIERS (points that geometrically align)
+                        # Count how many points fit this rigid overlay
                         inliers = np.sum(mask)
+                        
+                        # LOGIC: If 15+ points fit a perfect rotation/shift, it's you.
+                        # It doesn't matter if the other 50 points are off-screen.
                         if inliers > best_score:
                             best_score = inliers
                             best_match = name
+                            # Optimization: If we found a solid patch, stop searching this user
+                            if best_score > 30: break
 
-        # Score Threshold
-        # With RANSAC, a score of 8-10 means 8-10 points matched AND fit the same physical shape.
-        # This is much harder to fake than 8 random points.
-        if best_score > 40: 
+        # Threshold: 15 aligned points is statistically very hard to fake 
+        # with a rigid transform constraint.
+        if best_score > 15: 
             return best_match, best_score
         return None, 0
 
