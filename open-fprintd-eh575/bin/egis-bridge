@@ -24,7 +24,7 @@ MANAGER_BUS = 'net.reactivated.Fprint'
 ENROLL_DIR = "/var/lib/open-fprintd/egis"
 
 # Config constants (formerly in egis_config.py)
-ENROLL_STAGES = 15
+ENROLL_STAGES = 30
 MATCH_THRESHOLD = 15
 
 class EgisBridge(dbus.service.Object):

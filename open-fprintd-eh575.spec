@@ -1,6 +1,6 @@
 Name:           open-fprintd-eh575
 Version:        0.2.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Egis EH575 Fingerprint Driver and Open Fprintd Manager
 
 License:        MIT
