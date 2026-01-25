@@ -1,6 +1,3 @@
-[submodule "open-fprintd"]
-	path = open-fprintd
-	url = https://github.com/AbbhinavJayaraman/open-fprintd.git
 [submodule "update_fork/open-fprintd"]
 	path = update_fork/open-fprintd
 	url = https://github.com/AbbhinavJayaraman/open-fprintd.git

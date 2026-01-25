@@ -1,12 +1,11 @@
 Name:           open-fprintd-eh575
 Version:        0.2.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Egis EH575 Fingerprint Driver and Open Fprintd Manager
 
 License:        MIT
 URL:            https://github.com/abbhinavjayaraman/python-egistec-eh575
-# The source tarball must be named: open-fprintd-eh575-0.2.5.tar.gz
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{url}/releases/download/v%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  systemd-rpm-macros
