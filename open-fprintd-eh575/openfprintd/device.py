@@ -171,32 +171,32 @@ class Device(dbus.service.Object):
         self._run_with_auth(sender, "net.reactivated.fprint.device.enroll", success_cb, error_cb, op)
 
     @dbus.service.method(INTERFACE_NAME, in_signature='s', out_signature='')
-        def DeleteEnrolledFingers2(self, finger_name):
-            logging.debug('DeleteEnrolledFingers2 %s' % finger_name)
-            
-            # 1. Security Check
-            try:
-                polkit.check_privilege(dbus.get_sender(), "net.reactivated.fprint.device.enroll")
-            except PermissionError:
-                raise PermissionDenied()
+    def DeleteEnrolledFingers2(self, finger_name):
+        logging.debug('DeleteEnrolledFingers2 %s' % finger_name)
+        
+        # 1. Security Check
+        try:
+            polkit.check_privilege(dbus.get_sender(), "net.reactivated.fprint.device.enroll")
+        except PermissionError:
+            raise PermissionDenied()
 
-            # 2. Get User context (Assuming self.username is set during Claim)
-            # If not set, we might need to rely on the claiming logic, 
-            # but typically OpenFprintd sets this on Claim().
-            if not hasattr(self, 'username') or not self.username:
-                # Fallback if unclaim/claim logic is strict
-                # For now, we assume the device is claimed by the user performing the action
-                logging.error("Device not claimed by a user, cannot delete specific finger.")
-                raise dbus.exceptions.DBusException('net.reactivated.Fprint.Error.ClaimDevice')
+        # 2. Get User context (Assuming self.username is set during Claim)
+        # If not set, we might need to rely on the claiming logic, 
+        # but typically OpenFprintd sets this on Claim().
+        if not hasattr(self, 'username') or not self.username:
+            # Fallback if unclaim/claim logic is strict
+            # For now, we assume the device is claimed by the user performing the action
+            logging.error("Device not claimed by a user, cannot delete specific finger.")
+            raise dbus.exceptions.DBusException('net.reactivated.Fprint.Error.ClaimDevice')
 
-            # 3. Call Driver
-            # We assume self.target is the driver wrapper which has access to the matcher
-            # If direct access isn't available, you may need to route this through your manager.
-            # However, typically the 'device' object can invoke the driver.
-            if hasattr(self.target, 'delete_finger'):
-                self.target.delete_finger(self.username, finger_name)
-            else:
-                logging.warning("Driver does not support DeleteEnrolledFingers2")
+        # 3. Call Driver
+        # We assume self.target is the driver wrapper which has access to the matcher
+        # If direct access isn't available, you may need to route this through your manager.
+        # However, typically the 'device' object can invoke the driver.
+        if hasattr(self.target, 'delete_finger'):
+            self.target.delete_finger(self.username, finger_name)
+        else:
+            logging.warning("Driver does not support DeleteEnrolledFingers2")
 
     # ------------------ Claim/Release --------------------------
 
