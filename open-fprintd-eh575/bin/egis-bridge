@@ -49,7 +49,10 @@ class EgisBridge(dbus.service.Object):
         try:
             manager_proxy = self.bus.get_object(MANAGER_BUS, MANAGER_OBJ)
             manager = dbus.Interface(manager_proxy, MANAGER_IFACE)
-            manager.RegisterDevice(self.path)
+            
+            # FIX: Explicitly cast string to dbus.ObjectPath
+            manager.RegisterDevice(dbus.ObjectPath(self.path))
+            
             print("[BRIDGE] Successfully registered with open-fprintd!")
         except Exception as e:
             print(f"[BRIDGE] Failed to register: {e}")
@@ -122,6 +125,27 @@ class EgisBridge(dbus.service.Object):
     def DeleteEnrolledFingers(self, username):
         print(f"[BRIDGE] Deleting prints for {username}")
         self.matcher.delete_user_fingers(username)
+    
+    # @dbus.service.method(DEVICE_IFACE, in_signature='ss', out_signature='')
+    # def DeleteEnrolledFinger(self, username, finger_name):
+    #     print(f"[BRIDGE] Deleting {finger_name} for user '{username}'")
+        
+    #     if username == "*":
+    #         # Wildcard Logic for Root Override
+    #         print("[BRIDGE] performing wildcard search...")
+    #         found = False
+    #         import os
+    #         for filename in os.listdir(ENROLL_DIR):
+    #             if filename.endswith(f"_{finger_name}.npy"):
+    #                 # user_fingername.npy -> split at last _
+    #                 real_user = filename.rsplit('_', 1)[0]
+    #                 print(f"[BRIDGE] Deleting orphan: {filename}")
+    #                 self.matcher.delete_specific_finger(real_user, finger_name)
+    #                 found = True
+    #         if not found:
+    #             print("[BRIDGE] No matching files found.")
+    #     else:
+    #         self.matcher.delete_specific_finger(username, finger_name)
 
     # --- Logic Core ---
     

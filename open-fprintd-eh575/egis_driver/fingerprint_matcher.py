@@ -163,7 +163,7 @@ class FingerprintMatcher:
         
         good_matches = []
         for m, n in matches:
-            if m.distance < 0.75 * n.distance:
+            if m.distance < 0.85 * n.distance:
                 good_matches.append(m)
 
         if len(good_matches) < 4: return None, 0
@@ -213,34 +213,34 @@ class FingerprintMatcher:
         dst_pts = np.float32([kp_stored[m.trainIdx].pt for m in best_candidate_matches]).reshape(-1, 1, 2)
 
         # Run Geometric Verification
-        M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+        M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 10.0)
         
         if mask is not None:
             inliers = np.sum(mask)
             # Threshold: >25 inliers is usually a very strong match for SIFT
-            if inliers > 25: 
+            if inliers > 15: 
                 name = filename.replace(".npy", "")
                 return name, inliers
 
         return None, 0
 
-    def delete_specific_finger(self, username, finger_name):
-        """Deletes a single finger and rebuilds the tree."""
-        # Handle variations in naming (fprintd passes 'right-index-finger')
-        # Our files are 'username_right-index-finger.npy'
+    # def delete_specific_finger(self, username, finger_name):
+    #     """Deletes a single finger and rebuilds the tree."""
+    #     # Handle variations in naming (fprintd passes 'right-index-finger')
+    #     # Our files are 'username_right-index-finger.npy'
         
-        # Try exact match first
-        filename = f"{username}_{finger_name}.npy"
-        file_path = os.path.join(self.enroll_dir, filename)
+    #     # Try exact match first
+    #     filename = f"{username}_{finger_name}.npy"
+    #     file_path = os.path.join(self.enroll_dir, filename)
         
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print(f"[MATCHER] Deleted {filename}")
-            self.rebuild_index()
-            return True
+    #     if os.path.exists(file_path):
+    #         os.remove(file_path)
+    #         print(f"[MATCHER] Deleted {filename}")
+    #         self.rebuild_index()
+    #         return True
         
-        print(f"[MATCHER] Could not find {filename} to delete.")
-        return False
+    #     print(f"[MATCHER] Could not find {filename} to delete.")
+    #     return False
         
     def get_enrolled_fingers(self, username):
         """Returns list of fingers for fprintd"""

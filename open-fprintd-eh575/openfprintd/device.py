@@ -170,33 +170,53 @@ class Device(dbus.service.Object):
 
         self._run_with_auth(sender, "net.reactivated.fprint.device.enroll", success_cb, error_cb, op)
 
-    @dbus.service.method(INTERFACE_NAME, in_signature='s', out_signature='')
-    def DeleteEnrolledFingers2(self, finger_name):
-        logging.debug('DeleteEnrolledFingers2 %s' % finger_name)
+
+    # @dbus.service.method(INTERFACE_NAME, 
+    #                      in_signature='s', 
+    #                      out_signature='', 
+    #                      connection_keyword='connection',
+    #                      sender_keyword='sender',
+    #                      async_callbacks=('success_cb', 'error_cb'))
+    # def DeleteEnrolledFingers2(self, finger_name=None, sender=None, connection=None, success_cb=None, error_cb=None):
+    #     # Debug log to see exactly what we received
+    #     logging.debug(f'DeleteEnrolledFingers2 input: finger_name="{finger_name}"')
         
-        # 1. Security Check
-        try:
-            polkit.check_privilege(dbus.get_sender(), "net.reactivated.fprint.device.enroll")
-        except PermissionError:
-            raise PermissionDenied()
+    #     def op():
+    #         # 1. Determine Target User (Handle "Not Claimed" via Root Override)
+    #         target_user = self.claimed_by
+            
+    #         if not target_user:
+    #             try:
+    #                 # If sender is Root (UID 0), allow wildcard deletion
+    #                 uid = self.bus.get_unix_user(sender)
+    #                 if uid == 0:
+    #                     logging.info("Sender is Root. Enabling wildcard deletion.")
+    #                     target_user = "*" 
+    #             except Exception as e:
+    #                 logging.error(f"Failed to check UID: {e}")
 
-        # 2. Get User context (Assuming self.username is set during Claim)
-        # If not set, we might need to rely on the claiming logic, 
-        # but typically OpenFprintd sets this on Claim().
-        if not hasattr(self, 'username') or not self.username:
-            # Fallback if unclaim/claim logic is strict
-            # For now, we assume the device is claimed by the user performing the action
-            logging.error("Device not claimed by a user, cannot delete specific finger.")
-            raise dbus.exceptions.DBusException('net.reactivated.Fprint.Error.ClaimDevice')
+    #         # 2. Strict Check: If we still don't have a user, reject.
+    #         if not target_user:
+    #             logging.error("Device not claimed and not root. Rejecting.")
+    #             raise ClaimDevice()
 
-        # 3. Call Driver
-        # We assume self.target is the driver wrapper which has access to the matcher
-        # If direct access isn't available, you may need to route this through your manager.
-        # However, typically the 'device' object can invoke the driver.
-        if hasattr(self.target, 'delete_finger'):
-            self.target.delete_finger(self.username, finger_name)
-        else:
-            logging.warning("Driver does not support DeleteEnrolledFingers2")
+    #         # 3. Explicit Type Casting (Fixes TypeError)
+    #         # D-Bus requires strict strings. We force cast to avoid dbus.String or None issues.
+    #         safe_user = str(target_user)
+    #         safe_finger = str(finger_name) if finger_name else ""
+
+    #         if not safe_finger:
+    #             logging.error("Finger name is empty/None")
+    #             raise ClaimDevice() # Abort if no finger specified
+
+    #         # 4. Call Bridge
+    #         logging.debug(f"Calling Bridge: DeleteEnrolledFinger(user={safe_user}, finger={safe_finger})")
+    #         if hasattr(self.target, 'DeleteEnrolledFinger'):
+    #             return self.target.DeleteEnrolledFinger(safe_user, safe_finger, signature='ss')
+    #         else:
+    #             logging.warning("Bridge does not support specific finger deletion")
+
+    #     self._run_with_auth(sender, "net.reactivated.fprint.device.enroll", success_cb, error_cb, op)
 
     # ------------------ Claim/Release --------------------------
 
